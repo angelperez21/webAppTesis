@@ -1,1 +1,5 @@
 .webApp
+.vscode
+app/__pycache__
+app/connection/__pycache__
+test.py
