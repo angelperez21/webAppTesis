@@ -3,3 +3,4 @@
 app/__pycache__
 app/connection/__pycache__
 test.py
+app/email/__pycache__

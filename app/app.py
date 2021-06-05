@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request
-from app.user import User
 from bson import json_util
+from app.user import User
+from app.mail.mail import Mail
 
-
-# , Response, jsonify
 
 app = Flask(__name__)
 userManage = User()
+sendMail = Mail()
 
 
 @app.route("/")
@@ -22,8 +22,8 @@ def validation():
             passwdPage = request.form["passwd"]
             emailDB = json_util.loads(json_util.dumps(userManage.find_user(userPage)))
         if len(emailDB) != 0:
-            print(emailDB[0]["email"])
-            if emailDB[0]["passwd"] == passwdPage:
+            emailDict = emailDB[0]
+            if emailDict["passwd"] == passwdPage:
                 return render_template("tagging.html")
             else:
                 return render_template("index.html", alert="Contraseña incorrecta")
@@ -53,23 +53,13 @@ def insert_user():
         if passwd == passwd1:
             responseDB = userManage.insert_user(user, email, passwd)
             if responseDB:
+                sendMail.send_mail(
+                    email,
+                    "Muchas gracias por tu ayuda",
+                    "Hola, muchísimas gracias por la ayuda, de verdad lo aprecio mucho, si tienes alguna duda no dudes en hacérmela saber",
+                )
                 return render_template("index.html", successful="Registro exitoso")
             else:
-                return "no se agrego registro"
+                return "No se realizo registro"
         else:
             return render_template("sign_up.html", alert="Contraseñas distintas")
-
-
-# @app.errorhandler(404)
-# def not_found():
-#     message = jsonify(
-#         {
-#             "message": "Resource not found" + request.url,
-#         }
-#     )
-#     response = Response(
-#         message,
-#         status=404,
-#         mimetype="application/json",
-#     )
-#     return response
