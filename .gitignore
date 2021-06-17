@@ -4,3 +4,5 @@ app/__pycache__
 app/connection/__pycache__
 test.py
 app/email/__pycache__
+app/templates/test.json
+app/mail/__pycache__/mail.cpython-39.pyc

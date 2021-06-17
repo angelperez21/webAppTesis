@@ -63,3 +63,8 @@ def insert_user():
                 return "No se realizo registro"
         else:
             return render_template("sign_up.html", alert="Contraseñas distintas")
+
+
+@app.route("/tankes")
+def tankes():
+    return render_template("thanks.html")
