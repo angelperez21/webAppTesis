@@ -6,6 +6,9 @@ class User(Connection):
         super().__init__()
         self.collectionUser = self.db["users"]
 
+    def getUsers(self):
+        return self.collectionUser.find()
+
     def insert_user(self, user, email, passwd):
         try:
             self.collectionUser.insert_one(

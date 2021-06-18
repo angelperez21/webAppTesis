@@ -1,11 +1,12 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
 from bson import json_util
 from app.user import User
 from app.mail.mail import Mail
-
+from app.tweets import Tweets
 
 app = Flask(__name__)
-userManage = User()
+userManager = User()
+tweetsManager = Tweets()
 sendMail = Mail()
 
 
@@ -14,13 +15,29 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/getTweets")
+def getTweets():
+    try:
+        if request.method == "GET":
+            data = json_util.dumps(tweetsManager.getTweets())
+            return Response(
+                data,
+                status=202,
+                mimetype="application/json",
+            )
+        else:
+            return "not Found"
+    except Exception:
+        return "Server error"
+
+
 @app.route("/validation", methods=["POST"])
 def validation():
     try:
         if request.method == "POST":
             userPage = request.form["email"]
             passwdPage = request.form["passwd"]
-            emailDB = json_util.loads(json_util.dumps(userManage.find_user(userPage)))
+            emailDB = json_util.loads(json_util.dumps(userManager.find_user(userPage)))
         if len(emailDB) != 0:
             emailDict = emailDB[0]
             if emailDict["passwd"] == passwdPage:
@@ -51,7 +68,7 @@ def insert_user():
         passwd = request.form["passwd"]
         passwd1 = request.form["passwd1"]
         if passwd == passwd1:
-            responseDB = userManage.insert_user(user, email, passwd)
+            responseDB = userManager.insert_user(user, email, passwd)
             if responseDB:
                 sendMail.send_mail(
                     email,
@@ -65,6 +82,6 @@ def insert_user():
             return render_template("sign_up.html", alert="Contraseñas distintas")
 
 
-@app.route("/tankes")
-def tankes():
-    return render_template("thanks.html")
+@app.route("/tagging")
+def tagging():
+    return render_template("tagging.html")

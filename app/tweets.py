@@ -1,10 +1,13 @@
-from connection.connection import Connection
+from app.connection.connection import Connection
 
 
-class tweets(Connection):
+class Tweets(Connection):
     def __init__(self):
-        super.__init__()
-        self.collectionTweets = self.db["tesis"]
+        super().__init__()
+        self.collectionTweets = self.db["tweets"]
+
+    def getTweets(self):
+        return self.collectionTweets.find()
 
     def insertTagging(self):
         pass

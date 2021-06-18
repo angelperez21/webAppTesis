@@ -12,17 +12,65 @@
 </head>
 
 <body>
-    <div class="container">
-        <button type="button" class="btn btn-light">Get_Gata</button>
-    </div>
+    <div id="list-tweets">
 
+    </div>
     <script src="{{ url_for('static',filename='js/jquery-3.6.0.min.js') }}"></script>
     <script type="text/javascript">
-        $(document).ready(
-            function() {
-
+        $.ajax({
+            url: 'http://10.21.3.80:8000/getTweets',
+            success: function(response) {
+                var listTweets = $("#list-tweets");
+                for (const i in response) {
+                    listTweets.append(
+                        '<div class="container">' +
+                        '<div class="row justify-content-center pt-2 mt-5 mr-1">' +
+                        '<div class="col-md-12">' +
+                        '<div class="card text-center">' +
+                        '<div class="card-header">' +
+                        'Identificador del Tweet ' + response[i]['_id'] +
+                        '</div>' +
+                        '<div class="card-body">' +
+                        '<p class="card-text">' + response[i]['tweet'] + '</p>' +
+                        '<h5>Valoración</h3>' +
+                        '<div class="input-group mb-2">' +
+                        '<div class="input-group-prepend">' +
+                        '<label class="input-group-text" for="inputGroupSelect01">Acoso</label>' +
+                        '</div>' +
+                        '<select class="custom-select" id="inputGroupSelect01">' +
+                        '<option selected>Selecciona alguno</option>' +
+                        '<option value="0.0"> Nada</option>' +
+                        '<option value="0.25">Casi nada</option>' +
+                        '<option value="0.50">Neutral</option>' +
+                        '<option value="0.75">Un poco</option>' +
+                        '<option value="1.0">Mucho</option>' +
+                        '</select>' +
+                        '<div class=" offset-1 input-group-prepend">' +
+                        '<label class="input-group-text" for="inputGroupSelect01">Violencia</label>' +
+                        '</div>' +
+                        '<select class="custom-select" id="inputGroupSelect01">' +
+                        '<option selected>Selecciona alguno</option>' +
+                        '<option value="0.0"> Nada</option>' +
+                        '<option value="0.25">Casi nada</option>' +
+                        '<option value="0.50">Neutral</option>' +
+                        '<option value="0.75">Un poco</option>' +
+                        '<option value="1.0">Mucho</option>' +
+                        '</select>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>'
+                    )
+                    console.log(response[i]['_id']);
+                    console.log(response[i]['tweet']);
+                }
+            },
+            error: function() {
+                console.log("not response")
             }
-        );
+        });
     </script>
 </body>
 

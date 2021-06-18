@@ -12,11 +12,3 @@ class Connection:
     #     "mongodb+srv://angel:-210313CyA@cluster0.bcx9n.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
     # )
     # db = client.tesis
-
-    def getTweets(self):
-        collection = self.db["tweets"]
-        return collection.find()
-
-    def getUsers(self):
-        collection = self.db["users"]
-        return collection.find()
