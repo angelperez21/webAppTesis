@@ -12,64 +12,111 @@
 </head>
 
 <body>
-    <div id="list-tweets">
-
-    </div>
+    <div id="container" class="container"></div>
     <script src="{{ url_for('static',filename='js/jquery-3.6.0.min.js') }}"></script>
-    <script type="text/javascript">
+    <script>
+        var pageNumber = 1;
+        var elementsXPage = 1;
+        var templateHTML = "";
+        var pagination;
+        var pageCount = 0;
+        var data = [];
+
+
+        function paginate(array, elements_page, page_number) {
+            return array.slice((page_number - 1) * elements_page, page_number * elements_page);
+        }
+
+        function nextPage() {
+            pageNumber++;
+            showContent(pagination);
+        }
+
+        function previusPage() {
+            pageNumber--;
+            showContent(pagination);
+        }
+
+        function setData(dataDB) {
+            data = dataDB;
+            showContent(dataDB);
+        }
+
+        function showContent(_data) {
+            pagination = paginate(data, elementsXPage, pageNumber);
+            templateHTML = "";
+            pagination.forEach(element => {
+                templateHTML +=
+                    '<div class="row justify-content-center pt-2 mt-5 mr-1">' +
+                    '<div class="col-md-12">' +
+                    '<div class="card text-center">' +
+                    '<div class="card-header">' +
+                    element['_id'] +
+                    '</div>' +
+                    '<div class="card-body">' +
+                    '<p class="card-text text-muted" style="font-size: 30px;">' +
+                    element['tweet'] + '</p>' +
+                    '<div class="input-group mb-1">' +
+                    '<div class="input-group-prepend">' +
+                    '<label class="input-group-text" for="inputGroupSelect01">Acoso</label>' +
+                    '</div>' +
+                    '<div class="form-check form-check-inline">' +
+                    '<input class="form-check-input" type="radio" name="acoso0" id="inlineRadio1" value="0.0" />' +
+                    '<label class="form-check-label" for="inlineRadio1">Nada</label>' +
+                    '</div>' +
+                    '<div class="form-check form-check-inline">' +
+                    '<input class="form-check-input" type="radio" name="acoso35" id="inlineRadio2" value="0.35" />' +
+                    '<label class="form-check-label" for="inlineRadio2">Leve</label>' +
+                    '</div>' +
+                    '<div class="form-check form-check-inline">' +
+                    '<input class="form-check-input" type="radio" name="acoso65" id="inlineRadio2" value="0.65" />' +
+                    '<label class="form-check-label" for="inlineRadio2">Moderado</label>' +
+                    '</div>' +
+                    '<div class="form-check form-check-inline">' +
+                    '<input class="form-check-input" type="radio" name="acoso1" id="inlineRadio2" value="1" />' +
+                    '<label class="form-check-label" for="inlineRadio2">Mucho</label>' +
+                    '</div>' +
+                    '<div class=" offset-1 input-group-prepend">' +
+                    '<label class="input-group-text" for="inputGroupSelect01">Violencia</label>' +
+                    '</div>' +
+                    '<div class="form-check form-check-inline">' +
+                    '<input class="form-check-input" type="radio" name="violencia0" id="inlineRadio1" value="0.0" />' +
+                    '<label class="form-check-label" for="inlineRadio1">Nada</label>' +
+                    '</div>' +
+                    '<div class="form-check form-check-inline">' +
+                    '<input class="form-check-input" type="radio" name="violencia35" id="inlineRadio2" value="0.35" />' +
+                    '<label class="form-check-label" for="inlineRadio2">Leve</label>' +
+                    '</div>' +
+                    '<div class="form-check form-check-inline">' +
+                    '<input class="form-check-input" type="radio" name="violencia65" id="inlineRadio2" value="0.65" />' +
+                    '<label class="form-check-label" for="inlineRadio2">Moderado</label>' +
+                    '</div>' +
+                    '<div class="form-check form-check-inline">' +
+                    '<input class="form-check-input" type="radio" name="violencia1" id="inlineRadio2" value="1" />' +
+                    '<label class="form-check-label" for="inlineRadio2">Mucho</label>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+            });
+            templateHTML += pageNumber > 1 ? " <button onclick='previusPage()'>Anterior</button>" : "";
+            templateHTML += pageNumber < data.length ? (" <button onclick='nextPage()'>Siguiente</button>") : "";
+            document.getElementById("container").innerHTML = "";
+            document.getElementById("container").innerHTML = templateHTML;
+        }
+        showContent(data);
+
         $.ajax({
-            url: 'http://10.21.3.80:8000/getTweets',
+            url: "http://10.21.3.80:8000/getTweets",
             success: function(response) {
-                var listTweets = $("#list-tweets");
-                for (const i in response) {
-                    listTweets.append(
-                        '<div class="container">' +
-                        '<div class="row justify-content-center pt-2 mt-5 mr-1">' +
-                        '<div class="col-md-12">' +
-                        '<div class="card text-center">' +
-                        '<div class="card-header">' +
-                        'Identificador del Tweet ' + response[i]['_id'] +
-                        '</div>' +
-                        '<div class="card-body">' +
-                        '<p class="card-text">' + response[i]['tweet'] + '</p>' +
-                        '<h5>Valoración</h3>' +
-                        '<div class="input-group mb-2">' +
-                        '<div class="input-group-prepend">' +
-                        '<label class="input-group-text" for="inputGroupSelect01">Acoso</label>' +
-                        '</div>' +
-                        '<select class="custom-select" id="inputGroupSelect01">' +
-                        '<option selected>Selecciona alguno</option>' +
-                        '<option value="0.0"> Nada</option>' +
-                        '<option value="0.25">Casi nada</option>' +
-                        '<option value="0.50">Neutral</option>' +
-                        '<option value="0.75">Un poco</option>' +
-                        '<option value="1.0">Mucho</option>' +
-                        '</select>' +
-                        '<div class=" offset-1 input-group-prepend">' +
-                        '<label class="input-group-text" for="inputGroupSelect01">Violencia</label>' +
-                        '</div>' +
-                        '<select class="custom-select" id="inputGroupSelect01">' +
-                        '<option selected>Selecciona alguno</option>' +
-                        '<option value="0.0"> Nada</option>' +
-                        '<option value="0.25">Casi nada</option>' +
-                        '<option value="0.50">Neutral</option>' +
-                        '<option value="0.75">Un poco</option>' +
-                        '<option value="1.0">Mucho</option>' +
-                        '</select>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>'
-                    )
-                    console.log(response[i]['_id']);
-                    console.log(response[i]['tweet']);
-                }
+                console.log("He sido invocado");
+                setData(response, response.length);
             },
             error: function() {
-                console.log("not response")
-            }
+                console.log("not response");
+            },
         });
     </script>
 </body>

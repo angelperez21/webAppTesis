@@ -4,17 +4,24 @@ from app.user import User
 from app.mail.mail import Mail
 from app.tweets import Tweets
 
+# Instancias
 app = Flask(__name__)
 userManager = User()
 tweetsManager = Tweets()
 sendMail = Mail()
 
 
+# Ruta inicial
+# Retorna la pagina principal de la aplicación web
+# El parametro es la URI a la cual accederemos
 @app.route("/")
 def index():
     return render_template("index.html")
 
 
+# Ruta de recuperación de tweets desde DB
+# Devuelve en formato JSON los tweets que tengamos almacenados en nuestra DB
+# El parametro es la URI a la cual accederemos
 @app.route("/getTweets")
 def getTweets():
     try:
@@ -31,6 +38,9 @@ def getTweets():
         return "Server error"
 
 
+# Ruta para validación de credenciales de usuario
+# El parametro "/validation" es la URI a la cual accederemos
+# El parametro methods=["POST"] es el metodo http que usaremos
 @app.route("/validation", methods=["POST"])
 def validation():
     try:
@@ -85,3 +95,8 @@ def insert_user():
 @app.route("/tagging")
 def tagging():
     return render_template("tagging.html")
+
+
+@app.route("/test")
+def test():
+    return render_template("test.html")
