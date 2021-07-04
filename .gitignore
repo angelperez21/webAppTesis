@@ -7,3 +7,4 @@ app/email/__pycache__
 app/templates/test.json
 app/mail/__pycache__/mail.cpython-39.pyc
 app/templates/test.html
+app/db/__pycache__

@@ -23,12 +23,10 @@
             height: 100px;
         }
         
-        .facebook {
-            display: block;
-            height: 20px;
-        }
-        
-        .telegram {
+        .facebook,
+        .telegram,
+        .twitter,
+        .whatsapp {
             display: block;
             height: 20px;
         }
@@ -70,21 +68,27 @@
             font-family: "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", sans-serif;
             line-height: 1.5;
         }
+        
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
     <title>Agradecimiento</title>
 </head>
 
 <body>
-    <table width="100%" cellpadding="0" cellspacing="0" st style="background-color: #e4e4e4">
+    <table width="100%" cellpadding="0" cellspacing="0" st style="background-color: #DEE7F8">
         <tr>
             <td>
-                <table id="main" width="600" align="center" cellpadding="0" cellspacing="15" style="background-color: #ffffff">
+                <table id="main" width="600" align="center" cellpadding="0" cellspacing="15" style="background-color: #F2F7FAF8">
                     <tr>
                         <td>
                             <table id="header" cellpadding="10" cellspacing="0">
                                 <tr>
                                     <td width="570" align="center">
-                                        <img class="thank" src="https://i.pinimg.com/originals/7b/50/e9/7b50e94e0f42426d1c84ccfb4210f80e.jpg" alt="" />
+                                        <img class="thank" src="https://lh3.googleusercontent.com/proxy/7b5qemsWd2WXxswOujCffWOX3awZZQ2h3YFFu4SXx710DZ50Hc8CDhVf41pcgSKXnBeAe9JKhHGqKEl1C6IrnoEcIAdi0jPR78PsyjQB_NLsjByoyvLvE-Glwy7RMaUJUF1_B6Z3Ug8UJjMD0C0KVAKro9I" alt="" />
                                     </td>
                                 </tr>
                             </table>
@@ -113,24 +117,20 @@
                     </tr>
                     <tr>
                         <td align="center">
-                            <a href="https://www.facebook.com/Angel.P.Arce29" class="facebook">
-                                <img class="facebook" src="https://icons-for-free.com/iconfiles/png/512/fb+social+social+network+icon-1320191784253690412.png" alt="facebook" srcset="">
-                            </a>
-                        </td>
-                        <td align="center">
-                            <a href="https://twitter.com/Angel_Perez_21" target="_blank" class="twitter">
-                                <img src="" alt="" srcset="">
-                            </a>
-                        </td>
-                        <td align="center">
-                            <a href="https://t.me/angelperez21" target="_blank" class="telegram">
-                                <img src="https://1.bp.blogspot.com/-cV0BWKrY_F8/XDc_s7rEbaI/AAAAAAAAGuc/XXCcF_li1po9SERY_9PLA9YAkaJwEGLiwCK4BGAYYCw/s1600/logo%2Btelegram.png" alt="" srcset="" class="telegram">
-                            </a>
-                        </td>
-                        <td align="center">
-                            <a href="https://wa.me/qr/U2XREG4G7PYCD1" target="_blank" class="whatsapp">
-
-                            </a>
+                            <div class="container">
+                                <a href="https://www.facebook.com/Angel.P.Arce29" target="_blank" class="facebook">
+                                    <img class="facebook" src="https://icons-for-free.com/iconfiles/png/512/fb+social+social+network+icon-1320191784253690412.png" alt="facebook" srcset="">
+                                </a>&nbsp
+                                <a href="https://twitter.com/Angel_Perez_21" target="_blank" class="twitter">
+                                    <img class="twitter" src="https://img.icons8.com/ultraviolet/452/twitter-circled--v1.png" alt="" srcset="">
+                                </a>&nbsp
+                                <a href="https://t.me/angelperez21" target="_blank" class="telegram">
+                                    <img class="telegram" src="https://1.bp.blogspot.com/-cV0BWKrY_F8/XDc_s7rEbaI/AAAAAAAAGuc/XXCcF_li1po9SERY_9PLA9YAkaJwEGLiwCK4BGAYYCw/s1600/logo%2Btelegram.png" alt="telegram" srcset="">
+                                </a>&nbsp
+                                <a href="https://wa.me/qr/U2XREG4G7PYCD1" target="_blank" class="whatsapp">
+                                    <img class="whatsapp" src="https://es.logodownload.org/wp-content/uploads/2018/10/whatsapp-logo-11-1019x1024.png" alt="">
+                                </a>
+                            </div>
                         </td>
 
                     </tr>

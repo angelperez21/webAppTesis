@@ -1,8 +1,5 @@
 body {
-    background-image: url(../images/background1.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
+    background-color: #E1F6EE;
 }
 
 .form-admin {

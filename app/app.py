@@ -1,14 +1,29 @@
+# Bibliotecas necesarias
 from flask import Flask, render_template, request, Response
 from bson import json_util
-from app.user import User
-from app.mail.mail import Mail
-from app.tweets import Tweets
+from flask_mail import Mail, Message
+from decouple import config
+import random
+
+# Modulos propios
+from app.db.user import User
+from app.db.tweets import Tweets
 
 # Instancias
-app = Flask(__name__)
 userManager = User()
 tweetsManager = Tweets()
-sendMail = Mail()
+app = Flask(__name__)
+
+# Configuración para el envio de correos
+app.config["MAIL_SERVER"] = "smtp-mail.outlook.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USERNAME"] = config("EMAIL")
+app.config["MAIL_PASSWORD"] = config("EMAIL_PASSWD")
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USE_SSL"] = False
+
+# Instancia para correos electronicos
+mail = Mail(app)
 
 
 # Ruta inicial
@@ -17,6 +32,20 @@ sendMail = Mail()
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+# Ruta para registro de usuarios
+# El parametro es la URI a la cual accederemos
+@app.route("/sign_up")
+def sign_up():
+    return render_template("sign_up.html")
+
+
+# Ruta para recuperar contraseña  de usuarios
+# El parametro es la URI a la cual accederemos
+@app.route("/restore")
+def restore():
+    return render_template("restore.html", code="")
 
 
 # Ruta de recuperación de tweets desde DB
@@ -39,8 +68,8 @@ def getTweets():
 
 
 # Ruta para validación de credenciales de usuario
-# El parametro "/validation" es la URI a la cual accederemos
-# El parametro methods=["POST"] es el metodo http que usaremos
+# "/validation" es la URI a la cual accederemos
+# parametro methods=["POST"] es el metodo http que usaremos
 @app.route("/validation", methods=["POST"])
 def validation():
     try:
@@ -51,7 +80,8 @@ def validation():
         if len(emailDB) != 0:
             emailDict = emailDB[0]
             if emailDict["passwd"] == passwdPage:
-                return render_template("tagging.html")
+                print(emailDict["user"])
+                return render_template("tagging.html", user=emailDict["user"])
             else:
                 return render_template("index.html", alert="Contraseña incorrecta")
         else:
@@ -60,16 +90,35 @@ def validation():
         return "not_found()"
 
 
-@app.route("/restore")
-def restore():
-    return render_template("restore.html")
+@app.route("/restore_passwd", methods=["POST"])
+def restore_passwd():
+    if request.method == "POST":
+        codeAu = int(random.random() * 10000000)
+        if len(request.values) == 1:
+            email_form = request.form["email"]
+            response = json_util.loads(
+                json_util.dumps(
+                    userManager.find_user(email_form),
+                ),
+            )
+        elif len(request.values) > 1:
+            email_form = request.form["email"]
+            print(email_form)
+            response = json_util.loads(
+                json_util.dumps(
+                    userManager.find_user(email_form),
+                ),
+            )
+            print(codeAu == int(request.form["code"]))
+    return (
+        render_template("restore.html", code=codeAu, email=email_form)
+        if response != 0
+        else render_template("render.html", alert="Correo o usuario no encontrado")
+    )
 
 
-@app.route("/sign_up")
-def sign_up():
-    return render_template("sign_up.html")
-
-
+# Ruta para registro de nuevo usuarios
+# Se accede por medio del método POST
 @app.route("/insert_user", methods=["POST"])
 def insert_user():
     if request.method == "POST":
@@ -78,16 +127,22 @@ def insert_user():
         passwd = request.form["passwd"]
         passwd1 = request.form["passwd1"]
         if passwd == passwd1:
+            # Almacenamos al usuario en nuestra DB
             responseDB = userManager.insert_user(user, email, passwd)
             if responseDB:
-                sendMail.send_mail(
+                sendMail(
                     email,
                     "Muchas gracias por tu ayuda",
-                    "Hola, muchísimas gracias por la ayuda, de verdad lo aprecio mucho, si tienes alguna duda no dudes en hacérmela saber",
                 )
-                return render_template("index.html", successful="Registro exitoso")
+                return render_template(
+                    "index.html",
+                    successful="Registro exitoso, por favor revisa el spam en tu correo",
+                )
             else:
-                return "No se realizo registro"
+                return render_template(
+                    "index.html",
+                    alert="Error al registrar el usuario, revise su información",
+                )
         else:
             return render_template("sign_up.html", alert="Contraseñas distintas")
 
@@ -100,3 +155,19 @@ def tagging():
 @app.route("/test")
 def test():
     return render_template("test.html")
+
+
+# Función para envio de correos a usuarios
+# Parametros:
+#   - recipients: Destinatario
+def sendMail(recipients, subject):
+    TestHTML = open("app/templates/thanks.html", "r")
+    messageTestHTML = TestHTML.read()
+    TestHTML.close
+    msg = Message(
+        subject,
+        sender=("Ángel Pérez", config("EMAIL")),
+        recipients=[recipients],
+    )
+    msg.html = messageTestHTML
+    mail.send(msg)
