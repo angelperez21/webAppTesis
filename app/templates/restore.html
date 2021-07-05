@@ -16,43 +16,47 @@
     <div class="container">
         <div class="row justify-content-center pt-4 mt-5 mr-1">
             <div class="col-md-4 form-admin">
-                <form action="/restore_passwd" method="POST">
+                {% if email and code %}
+                <form action="/restore_passwd_code" method="POST">
                     <div class="form-group text-center pt-3">
                         <h1 class="text-congrat">Recuperemos su contraseña</h1>
                     </div>
-                    {% if email %}
                     <div class="form-group mx-sm-4 pt-2">
                         <input type="text" class="form-control" placeholder="Correo/Usuario" name="email" value={{email}} required />
                     </div>
                     {% else %}
-                    <div class="form-group mx-sm-4 pt-2">
-                        <input type="text" class="form-control" placeholder="Correo/Usuario" name="email" required />
+                    <form action="/restore_passwd" method="POST">
+                        <div class="form-group text-center pt-3">
+                            <h1 class="text-congrat">Recuperemos su contraseña</h1>
+                        </div>
+                        <div class="form-group mx-sm-4 pt-2">
+                            <input type="text" class="form-control" placeholder="Correo/Usuario" name="email" required />
+                        </div>
+                        {% endif %} {% if alert %}
+                        <div class="alert alert-danger form-group mx-sm-4" role="alert ">
+                            {{alert}}
+                        </div>
+                        {% endif %} {% if code %}
+                        <div class="alert alert-success form-group mx-sm-4" role="alert ">
+                            Ingrese el código que llego a su correo electronico y su contraseña nueva {{code}}
+                        </div>
+                        <div class="form-group mx-sm-4 pb-1">
+                            <input type="password" class="form-control" placeholder="Contraseña" name="passwd" required />
+                        </div>
+                        <div class="form-group mx-sm-4 pb-1">
+                            <input type="password" class="form-control" placeholder="Confirme su contraseña" name="c_passwd" required />
+                        </div>
+                        <div class="form-group mx-sm-4 pb-1">
+                            <input type="text" class="form-control" placeholder="Ingrese código" name="code" required />
+                        </div>
+                        {% endif %}
+                        <div class="form-group mx-sm-4 pb-3">
+                            <input type="submit" class="ingresar boton btn btn-block" value="Enviar" />
+                        </div>
+                    </form>
+                    <div class="text-center">
+                        <a href="/" style="color: white">Iniciar Sesión</a>
                     </div>
-                    {% endif %} {% if alert %}
-                    <div class="alert alert-danger form-group mx-sm-4" role="alert ">
-                        {{alert}}
-                    </div>
-                    {% endif %} {% if code %}
-                    <div class="alert alert-success form-group mx-sm-4" role="alert ">
-                        Ingrese el código que llego a su correo electronico y su contraseña nueva
-                    </div>
-                    <div class="form-group mx-sm-4 pb-1">
-                        <input type="password" class="form-control" placeholder="Contraseña" name="passwd" required />
-                    </div>
-                    <div class="form-group mx-sm-4 pb-1">
-                        <input type="password" class="form-control" placeholder="Confirme su contraseña" name="c_passwd" required />
-                    </div>
-                    <div class="form-group mx-sm-4 pb-1">
-                        <input type="text" class="form-control" placeholder="Ingrese código" name="code" required />
-                    </div>
-                    {% endif %}
-                    <div class="form-group mx-sm-4 pb-3">
-                        <input type="submit" class="ingresar boton btn btn-block" value="Enviar" />
-                    </div>
-                </form>
-                <div class="text-center">
-                    <a href="/" style="color: white">Iniciar Sesión</a>
-                </div>
             </div>
         </div>
     </div>

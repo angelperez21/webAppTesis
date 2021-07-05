@@ -1,4 +1,4 @@
-from app.connection.connection import Connection
+from app.db.connection.connection import Connection
 
 
 class User(Connection):

@@ -3,15 +3,16 @@ from flask import Flask, render_template, request, Response
 from bson import json_util
 from flask_mail import Mail, Message
 from decouple import config
-import random
 
 # Modulos propios
 from app.db.user import User
 from app.db.tweets import Tweets
+from app.code.code import Code
 
 # Instancias
 userManager = User()
 tweetsManager = Tweets()
+code = Code()
 app = Flask(__name__)
 
 # Configuración para el envio de correos
@@ -80,7 +81,6 @@ def validation():
         if len(emailDB) != 0:
             emailDict = emailDB[0]
             if emailDict["passwd"] == passwdPage:
-                print(emailDict["user"])
                 return render_template("tagging.html", user=emailDict["user"])
             else:
                 return render_template("index.html", alert="Contraseña incorrecta")
@@ -93,23 +93,36 @@ def validation():
 @app.route("/restore_passwd", methods=["POST"])
 def restore_passwd():
     if request.method == "POST":
-        codeAu = int(random.random() * 10000000)
-        if len(request.values) == 1:
-            email_form = request.form["email"]
-            response = json_util.loads(
-                json_util.dumps(
-                    userManager.find_user(email_form),
-                ),
-            )
-        elif len(request.values) > 1:
-            email_form = request.form["email"]
-            print(email_form)
-            response = json_util.loads(
-                json_util.dumps(
-                    userManager.find_user(email_form),
-                ),
-            )
-            print(codeAu == int(request.form["code"]))
+        email_form = request.form["email"]
+        response = json_util.loads(
+            json_util.dumps(
+                userManager.find_user(email_form),
+            ),
+        )
+        codeAu = code.genCode()
+    return (
+        render_template("restore.html", code=codeAu, email=email_form)
+        if response != 0
+        else render_template("render.html", alert="Correo o usuario no encontrado")
+    )
+
+
+@app.route("/restore_passwd_code", methods=["POST"])
+def restore_passwd_code():
+    if request.method == "POST":
+        email_form = request.form["email"]
+        codeForm = int(request.form["code"])
+        response = json_util.loads(
+            json_util.dumps(
+                userManager.find_user(email_form),
+            ),
+        )
+        passwd = request.form["passwd"]
+        c_passwd = request.form["c_passwd"]
+        codeAu = code.getCode()
+        if codeAu == int(codeForm) and passwd == c_passwd:
+            # Update DB
+            print("Algo")
     return (
         render_template("restore.html", code=codeAu, email=email_form)
         if response != 0
