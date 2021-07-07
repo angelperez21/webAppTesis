@@ -49,6 +49,11 @@ def restore():
     return render_template("restore.html", code="")
 
 
+@app.route("/tagging")
+def tagging():
+    return render_template("tagging.html")
+
+
 # Ruta de recuperación de tweets desde DB
 # Devuelve en formato JSON los tweets que tengamos almacenados en nuestra DB
 # El parametro es la URI a la cual accederemos
@@ -90,6 +95,37 @@ def validation():
         return "not_found()"
 
 
+# Ruta para registro de nuevo usuarios
+# Se accede por medio del método POST
+@app.route("/insert_user", methods=["POST"])
+def insert_user():
+    if request.method == "POST":
+        user = request.form["user"]
+        email = request.form["email"]
+        passwd = request.form["passwd"]
+        passwd1 = request.form["passwd1"]
+        if passwd == passwd1:
+            # Almacenamos al usuario en nuestra DB
+            responseDB = userManager.insert_user(user, email, passwd)
+            if responseDB:
+                sendMail(
+                    email,
+                    "Muchas gracias por tu ayuda",
+                    "",
+                )
+                return render_template(
+                    "index.html",
+                    successful="Registro exitoso, por favor revise su correo electronico (Si no lo visualiza debería de estar en el SPAM)",
+                )
+            else:
+                return render_template(
+                    "index.html",
+                    alert="Error al registrar el usuario, revise su información",
+                )
+        else:
+            return render_template("sign_up.html", alert="Contraseñas distintas")
+
+
 @app.route("/restore_passwd", methods=["POST"])
 def restore_passwd():
     if request.method == "POST":
@@ -100,6 +136,11 @@ def restore_passwd():
             ),
         )
         codeAu = code.genCode()
+        sendMail(
+            email_form,
+            "Recuperemos su contraseña",
+            f"{codeAu} Este es su código para recuperar su contraseña",
+        )
     return (
         render_template("restore.html", code=codeAu, email=email_form)
         if response != 0
@@ -122,7 +163,11 @@ def restore_passwd_code():
         codeAu = code.getCode()
         if codeAu == int(codeForm) and passwd == c_passwd:
             # Update DB
-            print("Algo")
+            print("Todo coincide")
+        else:
+            print(
+                f"No coincide: \n codeAU == codeForm {codeAu == int(codeForm)}\n passwd == c_passwd {passwd == c_passwd}"
+            )
     return (
         render_template("restore.html", code=codeAu, email=email_form)
         if response != 0
@@ -130,57 +175,24 @@ def restore_passwd_code():
     )
 
 
-# Ruta para registro de nuevo usuarios
-# Se accede por medio del método POST
-@app.route("/insert_user", methods=["POST"])
-def insert_user():
-    if request.method == "POST":
-        user = request.form["user"]
-        email = request.form["email"]
-        passwd = request.form["passwd"]
-        passwd1 = request.form["passwd1"]
-        if passwd == passwd1:
-            # Almacenamos al usuario en nuestra DB
-            responseDB = userManager.insert_user(user, email, passwd)
-            if responseDB:
-                sendMail(
-                    email,
-                    "Muchas gracias por tu ayuda",
-                )
-                return render_template(
-                    "index.html",
-                    successful="Registro exitoso, por favor revisa el spam en tu correo",
-                )
-            else:
-                return render_template(
-                    "index.html",
-                    alert="Error al registrar el usuario, revise su información",
-                )
-        else:
-            return render_template("sign_up.html", alert="Contraseñas distintas")
-
-
-@app.route("/tagging")
-def tagging():
-    return render_template("tagging.html")
-
-
-@app.route("/test")
-def test():
-    return render_template("test.html")
-
-
 # Función para envio de correos a usuarios
 # Parametros:
 #   - recipients: Destinatario
-def sendMail(recipients, subject):
-    TestHTML = open("app/templates/thanks.html", "r")
-    messageTestHTML = TestHTML.read()
-    TestHTML.close
+#   - subject: Asunto
+def sendMail(recipients, subject, message):
+    messageText = ""
+    if message == "":
+        TextHTML = open("app/templates/thanks.html", "r")
+        messageText = TextHTML.read()
+        TextHTML.close
+    else:
+        messageText = message
+
+    print(messageText)
     msg = Message(
         subject,
         sender=("Ángel Pérez", config("EMAIL")),
         recipients=[recipients],
     )
-    msg.html = messageTestHTML
+    msg.html = messageText
     mail.send(msg)

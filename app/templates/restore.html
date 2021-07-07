@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet-admin.css') }}" />
-    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/logo.ico') }}" />
-    <title>Recuperar</title>
-</head>
-
-<body>
+{% extends "mainTemplate.html" %}
+{% block title %}Recuperar{% endblock %}
+{% block content %}
     <div class="container">
         <div class="row justify-content-center pt-4 mt-5 mr-1">
             <div class="col-md-4 form-admin">
@@ -38,7 +26,7 @@
                         </div>
                         {% endif %} {% if code %}
                         <div class="alert alert-success form-group mx-sm-4" role="alert ">
-                            Ingrese el código que llego a su correo electronico y su contraseña nueva {{code}}
+                            Ingrese el código que llego a su correo electronico (Si no lo visualiza, deberia de estar en el spam) y su contraseña nueva
                         </div>
                         <div class="form-group mx-sm-4 pb-1">
                             <input type="password" class="form-control" placeholder="Contraseña" name="passwd" required />
@@ -63,6 +51,4 @@
     <!-- jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="{{ url_for( 'static', filename='js/jquery-3.5.1.min.js' )}} "></script>
     <script src="{{ url_for( 'static', filename='js/bootstrap.bundle.min.js' )}} "></script>
-</body>
-
-</html>
+{% endblock %}
