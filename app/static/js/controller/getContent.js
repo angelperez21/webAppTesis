@@ -4,6 +4,9 @@ var templateHTML = "";
 var pagination;
 var pageCount = 0;
 var data = [];
+var dataObj;
+var dataList = [];
+var count = 0;
 
 function paginate(array, elements_page, page_number) {
     return array.slice(
@@ -13,13 +16,31 @@ function paginate(array, elements_page, page_number) {
 }
 
 function nextPage() {
-    value = document.getElementsByTagName("acoso").values;
-    console.log(value);
+    count += 1;
+    var valuebu = $('input[name="acoso"]:checked').val();
+    var valuevi = $('input[name="violencia"]:checked').val();
+    var tweet = document.getElementById("tweet").innerHTML;
+    var user = document.getElementById("user").innerHTML;
+    var id = document.getElementById("idTweet").innerHTML;
+    dataObj = {
+        '_id': id,
+        'tweet': tweet,
+        "evaluators": [{
+            'evaluator': user,
+            'bullying': valuebu,
+            'violence': valuevi
+        }]
+    };
+    dataList.push(dataObj);
     pageNumber++;
+    if (count == 10) {
+        save()
+    }
     showContent(pagination);
 }
 
 function previusPage() {
+    dataList.pop();
     pageNumber--;
     showContent(pagination);
 }
@@ -39,10 +60,12 @@ function showContent(_data) {
             '<div class="card text-center">' +
             '<div class="card-header">' +
             "Identificador del tweet " +
+            "<p id=idTweet>" +
             item["_id"] +
+            "</p>" +
             "</div>" +
             '<div class="card-body">' +
-            '<p class="card-text text-muted" style="font-size: 25px;">' +
+            '<p class="card-text text-muted" id="tweet" style="font-size: 25px;">' +
             item["tweet"] +
             "</p>" +
             "</div>" +
@@ -55,7 +78,7 @@ function showContent(_data) {
             "</div>" +
             '<div class="col-md-1 col-lg-2 col-sm-1">' +
             "<label>" +
-            '<input type="radio" name="acoso" class="card-input-element" value="0.0"/>' +
+            '<input  type="radio" name="acoso" class="card-input-element" value="0.0" checked />' +
             '<div class="panel panel-default card-input" >' +
             '<div class = "panel-heading" style = "background-color: #B9DAFC; border-radius: 10px" >' +
             "Nada" +
@@ -65,7 +88,7 @@ function showContent(_data) {
             "</div>" +
             '<div class="col-md-1 col-lg-2 col-sm-1 ">' +
             "<label>" +
-            '<input type = "radio" name = "acoso" class = "card-input-element" value = "0.35" / >' +
+            '<input  type = "radio" name = "acoso" class = "card-input-element" value = "0.35" / >' +
             '<div class="panel panel-default card-input">' +
             '<div class="panel-heading" style="background-color: #B9DAFC; border-radius: 10px">' +
             "Poco" +
@@ -75,7 +98,7 @@ function showContent(_data) {
             "</div>" +
             '<div class="col-md-1 col-lg-2 col-sm-1 ">' +
             "<label>" +
-            '<input type = "radio" name = "acoso" class = "card-input-element" value = "0.65" / >' +
+            '<input  type = "radio" name = "acoso" class = "card-input-element" value = "0.65" / >' +
             '<div class="panel panel-default card-input">' +
             '<div class="panel-heading" style="background-color: #B9DAFC; border-radius: 10px">' +
             "Mucho" +
@@ -85,7 +108,7 @@ function showContent(_data) {
             "</div>" +
             '<div class="col-md-1 col-lg-2 col-sm-1 ">' +
             "<label>" +
-            '<input type = "radio" name = "acoso" class = "card-input-element" value = "1" / >' +
+            '<input  type = "radio" name = "acoso" class = "card-input-element" value = "1" / >' +
             '<div class="panel panel-default card-input">' +
             '<div class="panel-heading" style="background-color: #B9DAFC; border-radius: 10px">' +
             "Elevado" +
@@ -102,7 +125,7 @@ function showContent(_data) {
             "</div>" +
             '<div class="col-md-1 col-lg-2 col-sm-1 ">' +
             "<label>" +
-            '<input type = "radio" name = "violencia" class = "card-input-element" value = "0.0" / >' +
+            '<input type = "radio" name = "violencia" class = "card-input-element" value = "0.0" checked />' +
             '<div class="panel panel-default card-input">' +
             '<div class="panel-heading" style="background-color: #B9DAFC; border-radius: 10px">' +
             "Nada" +
@@ -165,12 +188,25 @@ function showContent(_data) {
 showContent(data);
 
 $.ajax({
-    url: "http://10.21.3.80:8000/getTweets",
+    url: "/getTweets",
+    type: 'POST',
     success: function(response) {
-        console.log("He sido invocado");
         setData(response, response.length);
     },
     error: function() {
         console.log("not response");
     },
 });
+
+function save() {
+    for (var i = 0; i < dataList.length; i++) {
+        console.log("tweet #: " + i);
+        console.log(dataList[i])
+    }
+    $.ajax({
+        url: "/saveTags",
+        type: 'POST',
+        data: JSON.stringify(dataList),
+        contentType: "application/json"
+    });
+}

@@ -49,18 +49,13 @@ def restore():
     return render_template("restore.html", code="")
 
 
-@app.route("/tagging")
-def tagging():
-    return render_template("tagging.html")
-
-
 # Ruta de recuperación de tweets desde DB
 # Devuelve en formato JSON los tweets que tengamos almacenados en nuestra DB
 # El parametro es la URI a la cual accederemos
-@app.route("/getTweets")
+@app.route("/getTweets", methods=["POST"])
 def getTweets():
     try:
-        if request.method == "GET":
+        if request.method == "POST":
             data = json_util.dumps(tweetsManager.getTweets())
             return Response(
                 data,
@@ -85,10 +80,11 @@ def validation():
             emailDB = json_util.loads(json_util.dumps(userManager.find_user(userPage)))
         if len(emailDB) != 0:
             emailDict = emailDB[0]
-            if emailDict["passwd"] == passwdPage:
-                return render_template("tagging.html", user=emailDict["user"])
-            else:
-                return render_template("index.html", alert="Contraseña incorrecta")
+            return (
+                render_template("tagging.html", user=emailDict["user"])
+                if emailDict["passwd"] == passwdPage
+                else render_template("index.html", alert="Contraseña incorrecta")
+            )
         else:
             return render_template("index.html", alert="Correo no encontrado")
     except Exception:
@@ -136,14 +132,15 @@ def restore_passwd():
             ),
         )
         codeAu = code.genCode()
-        sendMail(
-            email_form,
-            "Recuperemos su contraseña",
-            f"{codeAu} Este es su código para recuperar su contraseña",
-        )
+        if len(response) != 0:
+            sendMail(
+                email_form,
+                "Recuperemos su contraseña",
+                f"{codeAu} Este es su código para recuperar su contraseña",
+            )
     return (
         render_template("restore.html", code=codeAu, email=email_form)
-        if response != 0
+        if len(response) != 0
         else render_template("restore.html", alert="Correo o usuario no encontrado")
     )
 
@@ -164,7 +161,7 @@ def restore_passwd_code():
         if codeAu == int(codeForm) and passwd == c_passwd:
             return (
                 render_template("index.html", successful="Contraseña reestablecida")
-                if userManager.update_user(response["user"], email_form, passwd)
+                if userManager.update_user(response[0]["user"], email_form, passwd)
                 else render_template("restore.html", alert="Erro al actualizar")
             )
         else:
@@ -173,6 +170,16 @@ def restore_passwd_code():
                 if (codeAu != codeForm)
                 else render_template("restore.html", alert="Contraseñas distintas")
             )
+
+
+@app.route("/saveTags", methods=["POST"])
+def saveTags():
+    if request.method == "POST":
+        data = json_util.loads(json_util.dumps(request.data))
+        # update DB
+        # return template with user
+        print(data)
+        pass
 
 
 # Función para envio de correos a usuarios
