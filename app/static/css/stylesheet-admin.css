@@ -1,5 +1,10 @@
 body {
-    background-color: #E1F6EE;
+    background-image: url(../assets/background.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: #0CB793;
 }
 
 .form-admin {

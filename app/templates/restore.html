@@ -2,7 +2,7 @@
 {% block title %}Recuperar{% endblock %}
 {% block content %}
     <div class="container">
-        <div class="row justify-content-center pt-4 mt-5 mr-1">
+        <div class="row justify-content-center pt-2 mt-5 mr-1">
             <div class="col-md-4 form-admin">
                 {% if email and code %}
                 <form action="/restore_passwd_code" method="POST">
@@ -43,7 +43,8 @@
                         </div>
                     </form>
                     <div class="text-center">
-                        <a href="/" style="color: white">Iniciar Sesión</a>
+                        <a href="/" style="color: white">Iniciar Sesión</a><br />
+                        <a href="/sign_up" style="color: white">Registrarse</a>
                     </div>
             </div>
         </div>

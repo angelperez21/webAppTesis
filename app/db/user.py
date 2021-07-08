@@ -23,3 +23,21 @@ class User(Connection):
             return self.collectionUser.find({"_id": email})
         except Exception:
             return "null"
+
+    def update_user(self, user, email, passwd):
+        try:
+            filter = {
+                "_id": email,
+            }
+            values = {
+                "$set": {
+                    "_id": email,
+                    "user": user,
+                    "email": email,
+                    "passwd": passwd,
+                }
+            }
+            return self.collectionUser.update_one(filter, values)
+        except Exception as e:
+            print(f"Error {e}")
+            return False

@@ -144,7 +144,7 @@ def restore_passwd():
     return (
         render_template("restore.html", code=codeAu, email=email_form)
         if response != 0
-        else render_template("render.html", alert="Correo o usuario no encontrado")
+        else render_template("restore.html", alert="Correo o usuario no encontrado")
     )
 
 
@@ -162,17 +162,17 @@ def restore_passwd_code():
         c_passwd = request.form["c_passwd"]
         codeAu = code.getCode()
         if codeAu == int(codeForm) and passwd == c_passwd:
-            # Update DB
-            print("Todo coincide")
-        else:
-            print(
-                f"No coincide: \n codeAU == codeForm {codeAu == int(codeForm)}\n passwd == c_passwd {passwd == c_passwd}"
+            return (
+                render_template("index.html", successful="Contraseña reestablecida")
+                if userManager.update_user(response["user"], email_form, passwd)
+                else render_template("restore.html", alert="Erro al actualizar")
             )
-    return (
-        render_template("restore.html", code=codeAu, email=email_form)
-        if response != 0
-        else render_template("render.html", alert="Correo o usuario no encontrado")
-    )
+        else:
+            return (
+                render_template("restore.html", alert="Los códigos no coiciden")
+                if (codeAu != codeForm)
+                else render_template("restore.html", alert="Contraseñas distintas")
+            )
 
 
 # Función para envio de correos a usuarios
@@ -187,8 +187,6 @@ def sendMail(recipients, subject, message):
         TextHTML.close
     else:
         messageText = message
-
-    print(messageText)
     msg = Message(
         subject,
         sender=("Ángel Pérez", config("EMAIL")),
