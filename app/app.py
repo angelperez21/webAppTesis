@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, Response
 from bson import json_util
 from flask_mail import Mail, Message
 from decouple import config
+import random
 
 # Modulos propios
 from app.db.user import User
@@ -19,7 +20,7 @@ app = Flask(__name__)
 app.config["MAIL_SERVER"] = "smtp-mail.outlook.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USERNAME"] = config("EMAIL")
-app.config["MAIL_PASSWORD"] = config("EMAIL_PASSWD")
+app.config["MAIL_PASSWORD"] = config("PASSWD_EMAIL")
 app.config["MAIL_USE_TLS"] = True
 app.config["MAIL_USE_SSL"] = False
 
@@ -56,9 +57,26 @@ def restore():
 def getTweets():
     try:
         if request.method == "POST":
-            data = json_util.dumps(tweetsManager.getTweets())
+            req = request.json["user"]
+            print(req)
+            data = []
+            listTweets = json_util.loads(json_util.dumps(tweetsManager.getTweets()))
+            indexes = random.sample(range(len(listTweets)), 100)
+            for index in indexes:
+                if not len(listTweets[index]["evaluation"]):
+                    data.append(listTweets[index])
+                else:
+                    flag = True
+                    for evaluator in listTweets[index]["evaluation"]:
+                        if evaluator["user"] == req:
+                            flag = False
+                            indexes.append(random.sample(range(len(listTweets)), 1))
+                            break
+
+                    if flag:
+                        data.append(data.append(listTweets[index]))
             return Response(
-                data,
+                json_util.dumps(data),
                 status=202,
                 mimetype="application/json",
             )
@@ -78,7 +96,7 @@ def validation():
             userPage = request.form["email"]
             passwdPage = request.form["passwd"]
             emailDB = json_util.loads(json_util.dumps(userManager.find_user(userPage)))
-        if len(emailDB) != 0:
+        if len(emailDB):
             emailDict = emailDB[0]
             return (
                 render_template("tagging.html", user=emailDict["user"])
@@ -132,7 +150,7 @@ def restore_passwd():
             ),
         )
         codeAu = code.genCode()
-        if len(response) != 0:
+        if len(response):
             sendMail(
                 email_form,
                 "Recuperemos su contraseña",
@@ -140,7 +158,7 @@ def restore_passwd():
             )
     return (
         render_template("restore.html", code=codeAu, email=email_form)
-        if len(response) != 0
+        if len(response)
         else render_template("restore.html", alert="Correo o usuario no encontrado")
     )
 

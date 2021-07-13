@@ -9,8 +9,5 @@ class Tweets(Connection):
     def getTweets(self):
         return self.collectionTweets.find()
 
-    def insertTagging(self):
-        pass
-
     def updateTagging(self):
         pass

@@ -23,18 +23,18 @@ function nextPage() {
     var user = document.getElementById("user").innerHTML;
     var id = document.getElementById("idTweet").innerHTML;
     dataObj = {
-        '_id': id,
-        'tweet': tweet,
-        "evaluators": [{
-            'evaluator': user,
-            'bullying': valuebu,
-            'violence': valuevi
-        }]
+        _id: id,
+        tweet: tweet,
+        evaluators: [{
+            evaluator: user,
+            bullying: valuebu,
+            violence: valuevi,
+        }, ],
     };
     dataList.push(dataObj);
     pageNumber++;
     if (count == 10) {
-        save()
+        save();
     }
     showContent(pagination);
 }
@@ -49,6 +49,34 @@ function setData(dataDB) {
     data = dataDB;
     showContent(dataDB);
 }
+
+function save() {
+    for (var i = 0; i < dataList.length; i++) {
+        console.log("tweet #: " + i);
+        console.log(dataList[i]);
+    }
+    $.ajax({
+        url: "/saveTags",
+        type: "POST",
+        data: JSON.stringify(dataList),
+        contentType: "application/json",
+    });
+}
+
+$.ajax({
+    url: "/getTweets",
+    type: "POST",
+    data: JSON.stringify({
+        user: document.getElementById("user").innerHTML,
+    }),
+    contentType: "application/json",
+    success: function(response) {
+        setData(response, response.length);
+    },
+    error: function() {
+        console.log("not response");
+    },
+});
 
 function showContent(_data) {
     pagination = paginate(data, elementsXPage, pageNumber);
@@ -186,27 +214,3 @@ function showContent(_data) {
     document.getElementById("container").innerHTML = templateHTML;
 }
 showContent(data);
-
-$.ajax({
-    url: "/getTweets",
-    type: 'POST',
-    success: function(response) {
-        setData(response, response.length);
-    },
-    error: function() {
-        console.log("not response");
-    },
-});
-
-function save() {
-    for (var i = 0; i < dataList.length; i++) {
-        console.log("tweet #: " + i);
-        console.log(dataList[i])
-    }
-    $.ajax({
-        url: "/saveTags",
-        type: 'POST',
-        data: JSON.stringify(dataList),
-        contentType: "application/json"
-    });
-}
