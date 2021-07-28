@@ -15,25 +15,14 @@
 </head>
 
 <body>
-    <nav class="
-        navbar
-        sticky-top
-        navbar-expand-lg
-        justify-content-end
-        navbar-light
-        bg-light
-      ">
-        <a id="user" class="navbar-brand">{{user}}</a>
-        <form class="justify-content-end" action="/" method="GET">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="save()">
-          Salir
-        </button>
-        </form>
+    <nav class="navbar sticky-top navbar-expand-lg justify-content-end" style="background-color: #f8f8f852">
+        <a id="user" style="color: beige" class="navbar-brand">{{user}}</a>
+        <button style="color: beige; outline-style: groove" class="btn my-2 my-sm-0" type="submit" onclick="save()"> Salir
+    </button>
     </nav>
-
     <div id="container" class="container"></div>
 
-    <script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/controller/getContent.js') }}"></script>
 </body>
 

@@ -4,6 +4,7 @@ from bson import json_util
 from flask_mail import Mail, Message
 from decouple import config
 import random
+import json
 
 # Modulos propios
 from app.db.user import User
@@ -57,32 +58,28 @@ def restore():
 def getTweets():
     try:
         if request.method == "POST":
-            req = request.json["user"]
-            print(req)
-            data = []
+            nameEvaluator = request.json["user"]
+            stop = request.json["stop"]
             listTweets = json_util.loads(json_util.dumps(tweetsManager.getTweets()))
-            indexes = random.sample(range(len(listTweets)), 100)
-            for index in indexes:
-                if not len(listTweets[index]["evaluation"]):
-                    data.append(listTweets[index])
-                else:
-                    flag = True
-                    for evaluator in listTweets[index]["evaluation"]:
-                        if evaluator["user"] == req:
-                            flag = False
-                            indexes.append(random.sample(range(len(listTweets)), 1))
-                            break
-
-                    if flag:
-                        data.append(data.append(listTweets[index]))
+            finalTweets = [item for item in listTweets if len(item["evaluation"]) == 0]
+            taggedTweets = [item for item in listTweets if len(item["evaluation"]) > 0]
+            indexes = random.sample(range(len(listTweets)), stop)
+            if len(taggedTweets):
+                for item in taggedTweets:
+                    for evaluator in item["evaluation"]:
+                        if evaluator["user"] != nameEvaluator:
+                            finalTweets.append(item)
+            responseTweets = [finalTweets[index] for index in indexes]
             return Response(
-                json_util.dumps(data),
+                json_util.dumps(responseTweets),
                 status=202,
                 mimetype="application/json",
             )
         else:
+            print("Not found")
             return "not Found"
-    except Exception:
+    except Exception as e:
+        print("Error ", str(e))
         return "Server error"
 
 
@@ -95,7 +92,11 @@ def validation():
         if request.method == "POST":
             userPage = request.form["email"]
             passwdPage = request.form["passwd"]
-            emailDB = json_util.loads(json_util.dumps(userManager.find_user(userPage)))
+            emailDB = json_util.loads(
+                json_util.dumps(
+                    userManager.find_user(userPage),
+                ),
+            )
         if len(emailDB):
             emailDict = emailDB[0]
             return (
@@ -192,12 +193,19 @@ def restore_passwd_code():
 
 @app.route("/saveTags", methods=["POST"])
 def saveTags():
-    if request.method == "POST":
-        data = json_util.loads(json_util.dumps(request.data))
-        # update DB
-        # return template with user
-        print(data)
-        pass
+    try:
+        if request.method == "POST":
+            data = json.loads(request.data)
+            # update DB
+            # return template with user
+            print(data)
+            return Response(
+                status=202,
+            )
+    except Exception:
+        return Response(
+            status=404,
+        )
 
 
 # Función para envio de correos a usuarios
