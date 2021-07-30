@@ -5,7 +5,7 @@ var user = "";
 var pagination;
 var pageCount = 0;
 var data = [];
-var dataObj = [];
+var tagList = [];
 var dataList = [];
 var count = 0;
 var pause = 0;
@@ -18,6 +18,8 @@ function paginate(array, elements_page, page_number) {
     );
 }
 
+// Función para obtener el numero de tweets antes de una
+// pregunta para verificar si el usuario se encuentra atento
 function getStop() {
     min = Math.ceil(40);
     max = Math.floor(60);
@@ -27,28 +29,29 @@ function getStop() {
 function nextPage() {
     endTagged = new Date();
     totalTagged = endTagged.getTime() - startTagged.getTime();
-    min = Math.floor((totalTagged / 1000 / 60) << 0);
-    sec = Math.floor((totalTagged / 1000) % 60);
+    seg = totalTagged / 1000;
+    console.log("Tiempo ocupado para etiquetar -> " + seg);
     count += 1;
     var valuebu = $('input[name="acoso"]:checked').val();
     var valuevi = $('input[name="violencia"]:checked').val();
     var tweet = document.getElementById("tweet").innerHTML;
     user = document.getElementById("user").innerHTML;
     var id = document.getElementById("idTweet").innerHTML;
-    dataObj.push({
+    tagList.push({
         evaluator: user,
         bullying: valuebu,
         violence: valuevi,
-        timeTagged: min + ":" + sec,
+        timeTagged: seg,
     });
     newObj = {
         _id: id,
         tweet: tweet,
-        evaluation: dataObj,
+        evaluation: tagList,
     };
     dataList.push(newObj);
     pageNumber++;
     if (count == pause) {
+        console.table(dataList);
         save();
     }
     showContent(pagination);
@@ -68,14 +71,10 @@ function setData(dataDB) {
 function save() {
     endLogin = new Date();
     total = endLogin.getTime() - startLogin.getTime();
-    min = Math.floor((total / 1000 / 60) << 0);
-    sec = Math.floor((total / 1000) % 60);
-    console.log("Minutos: " + min + "\nSegundos: " + sec);
+    seg = total / 1000;
+    console.log("Tiempo en segundos loggeado: " + seg);
     user = document.getElementById("user").innerHTML;
     console.table(dataList);
-    dataList.forEach((item) => {
-        item["evaluation"].forEach((evaluation) => {});
-    });
     $.ajax({
         url: "/saveTags",
         type: "POST",
@@ -113,7 +112,11 @@ function showContent(_data) {
     pagination = paginate(data, elementsXPage, pageNumber);
     templateHTML = "";
     pagination.forEach((item) => {
-        dataObj = item["evaluation"];
+        console.log("Length " + item["evaluation"].length);
+        console.log("Type " + typeof item["evaluation"]);
+        item["evaluation"] > 0 ?
+            tagList.push(item["evaluation"]) :
+            console.log(item["evaluation"]);
         templateHTML +=
             '<div class="row justify-content-center pt-2 mt-2 mr-2">' +
             '<div class="col-md-12">' +

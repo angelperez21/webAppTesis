@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet-admin.css') }}" />
     <link rel="shortcut icon" href="{{ url_for('static', filename='assets/logo.ico') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/tagging.css') }}" />
@@ -17,8 +17,9 @@
 <body>
     <nav class="navbar sticky-top navbar-expand-lg justify-content-end" style="background-color: #f8f8f852">
         <a id="user" style="color: beige" class="navbar-brand">{{user}}</a>
-        <button style="color: beige; outline-style: groove" class="btn my-2 my-sm-0" type="submit" onclick="save()"> Salir
-    </button>
+        <button style="color: beige; outline-style: groove" class="btn my-2 my-sm-0" type="submit" onclick="save()">
+            Salir
+        </button>
     </nav>
     <div id="container" class="container"></div>
 
