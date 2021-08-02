@@ -64,8 +64,19 @@ function previusPage() {
 }
 
 function setData(dataDB) {
-    data = dataDB;
-    showContent(dataDB);
+    console.log(dataDB);
+    if (dataDB != "Server error") {
+        data = dataDB;
+        showContent(dataDB);
+    } else {
+        data.push({
+            _id: "No id",
+            evaluation: [],
+            tweet: "No tweet",
+        });
+        console.table(data);
+        showContent(dataDB);
+    }
 }
 
 function save() {
