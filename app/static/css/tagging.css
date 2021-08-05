@@ -3,28 +3,32 @@
     margin: 0 auto;
 }
 
-
-/**
-    Component
-  **/
-
-label {
-    width: 100%;
+.buttonExit {
+    border-radius: 5px;
+    border: none;
+    font-family: 'Poppins', sans-serif;
 }
 
-.card-input-element {
-    display: none;
+.user {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
 }
 
-.card-input {
-    margin: 10px;
-    padding: 00px;
+.exit {
+    width: 17px;
 }
 
-.card-input:hover {
-    cursor: pointer;
+.card {
+    background-color: #23241F;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 15px;
 }
 
-.card-input-element:checked+.card-input {
-    box-shadow: 0 0 1px 1px #2ecc71;
+.card-title {
+    font-size: 25px;
+}
+
+.card-text {
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
 }

@@ -29,6 +29,11 @@ app.config["MAIL_USE_SSL"] = False
 mail = Mail(app)
 
 
+@app.route("/test")
+def test():
+    return render_template("test.html")
+
+
 # Ruta inicial
 # Retorna la pagina principal de la aplicación web
 # El parametro es la URI a la cual accederemos
