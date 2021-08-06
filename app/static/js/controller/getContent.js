@@ -155,6 +155,16 @@ function showContent(_data) {
             '<input  type="radio" name="acoso" class="card-input-element" value="0.0" checked />' +
             '<div class="panel panel-default card-input" >' +
             '<div class="panel-heading btn btn-light" style = "border-radius: 10px" >' +
+            "Fuera de contexto" +
+            "</div>" +
+            "</div>" +
+            "</label>" +
+            "</div>" +
+            '<div class="col-md-1 col-lg-2 col-sm-1">' +
+            "<label>" +
+            '<input  type="radio" name="acoso" class="card-input-element" value="0.0" checked />' +
+            '<div class="panel panel-default card-input" >' +
+            '<div class="panel-heading btn btn-light" style = "border-radius: 10px" >' +
             "Nada" +
             "</div>" +
             "</div>" +
@@ -185,7 +195,7 @@ function showContent(_data) {
             '<input  type = "radio" name = "acoso" class = "card-input-element" value = "1" / >' +
             '<div class="panel panel-default card-input">' +
             '<div class="panel-heading btn btn-light" style="border-radius: 10px">' +
-            "Elevado" +
+            "Bastante" +
             "</div>" +
             "</div>" +
             "</label>" +
@@ -232,7 +242,7 @@ function showContent(_data) {
             '<input type = "radio" name = "violencia" class = "card-input-element" value = "1" / >' +
             '<div class="panel panel-default card-input">' +
             '<div class="panel-heading btn btn-light" style="border-radius: 10px">' +
-            "Elevado" +
+            "Bastante" +
             "</div>" +
             "</div>" +
             "</label>" +

@@ -1,6 +1,33 @@
 .container {
-    max-width: 900px;
+    max-width: 90%;
     margin: 0 auto;
+}
+
+.content {
+    max-width: 70%;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.acoso {
+    margin-top: 50px;
+    margin-bottom: 5px;
+}
+
+.tags {
+    background-color: #333333;
+    height: 35px;
+    border-radius: 10px;
+    /* align-items por defecto tiene el valor `stretch` */
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.inputTags {
+    margin-top: 10px;
+    background-color: #20d1a9;
+    margin-left: 10px;
 }
 
 .buttonExit {
@@ -29,6 +56,6 @@
 }
 
 .card-text {
-    font-size: 15px;
-    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+    font-family: 'Lato', sans-serif;
 }
