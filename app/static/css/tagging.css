@@ -6,8 +6,36 @@
 .content {
     max-width: 70%;
     margin: 0 auto;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.buttonsPag {
+    max-width: 100%;
+    margin-top: 15px;
+}
+
+.buttonsNP {
+    border-radius: 5px;
+    border-color: transparent;
+    width: 100px;
+    height: 30px;
+    font-family: 'Poppins', sans-serif;
+    margin-left: 10px;
+    background-color: transparent;
+    color: #20d1a9;
+}
+
+.buttonsNP:hover {
+    background-color: #20d1a9;
+    color: #111111;
+    border-color: transparent;
+}
+
+.buttonsNP:visited {
+    border-color: transparent;
+    background-color: #20d1a9;
+    color: #111111;
 }
 
 .acoso {
@@ -18,16 +46,7 @@
 .tags {
     background-color: #333333;
     height: 35px;
-    border-radius: 10px;
-    /* align-items por defecto tiene el valor `stretch` */
-    align-items: center;
-    justify-content: space-evenly;
-}
-
-.inputTags {
-    margin-top: 10px;
-    background-color: #20d1a9;
-    margin-left: 10px;
+    border-radius: 5px;
 }
 
 .buttonExit {
@@ -46,7 +65,7 @@
 }
 
 .card {
-    background-color: #23241F;
+    background-color: #191919;
     font-family: 'Poppins', sans-serif;
     border-radius: 15px;
 }
@@ -58,4 +77,13 @@
 .card-text {
     font-size: 17px;
     font-family: 'Lato', sans-serif;
+}
+
+.inputTags {
+    margin: 10px 0 0;
+    margin-left: 10px;
+}
+
+input[type="radius"] {
+    background-color: #20d1a9;
 }
