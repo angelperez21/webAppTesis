@@ -1,4 +1,7 @@
-# Bibliotecas necesarias
+# WebService y API REST para el proyecto de etiquetado de tweets.
+
+# Modulos y bibliotecas necesarias para levantar el servidor así
+# como el tratamiento y respuesta de las peticiones.
 from flask import Flask, render_template, request, Response
 from bson import json_util
 from flask_mail import Mail, Message
@@ -6,18 +9,18 @@ from decouple import config
 import random
 import json
 
-# Modulos propios
+"""Modulos necesarios para la conexión a la base de datos."""
 from app.db.user import User
 from app.db.tweets import Tweets
 from app.code.code import Code
 
-# Instancias
+"""Instancias necesarias."""
 userManager = User()
 tweetsManager = Tweets()
 code = Code()
 app = Flask(__name__)
 
-# Configuración para el envio de correos
+"""Configuración para el envio de correos."""
 app.config["MAIL_SERVER"] = "smtp-mail.outlook.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USERNAME"] = config("EMAIL")
@@ -25,7 +28,7 @@ app.config["MAIL_PASSWORD"] = config("PASSWD_EMAIL")
 app.config["MAIL_USE_TLS"] = True
 app.config["MAIL_USE_SSL"] = False
 
-# Instancia para correos electronicos
+""" Instancia para envio de correos electronicos."""
 mail = Mail(app)
 
 

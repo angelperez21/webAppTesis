@@ -1,6 +1,6 @@
 body {
     background: rgb(17, 17, 17);
-    background: linear-gradient(180deg, rgba(63, 169, 140, 1) 0%, rgba(17, 17, 17, 1) 35%);
+    background: linear-gradient(180deg, #3fa98c 0%, rgba(17, 17, 17, 1) 35%);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
