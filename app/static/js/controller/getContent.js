@@ -129,143 +129,93 @@ function showContent(_data) {
             tagList.push(item["evaluation"]) :
             console.log(item["evaluation"]);
         templateHTML +=
-            '<div class="row justify-content-center pt-2 mt-2 mr-2">' +
-            '<div class="col-md-12">' +
-            '<div class="card text-center text-white bg-dark mb-3">' +
-            '<div class="card-header">' +
-            "Identificador del tweet " +
-            "<p id=idTweet>" +
+            '<div class="card-deck pt-2 mt-2 mr-2">\
+            <div class="card text-white">\
+                <div class="card-body">\
+                    <div class="content">\
+                        <p class="text-center">\
+                            Identificador del tweet\
+                        </p>\
+                        <p class="card-title text-center" id="idTweet">' +
             item["_id"] +
-            "</p>" +
-            "</div>" +
-            '<div class="card-body">' +
-            '<p class="card-text" id="tweet" style="font-size: 20px;">' +
+            '</p>\
+                        <p class="card-text text-justify" id="tweet">' +
             item["tweet"] +
-            "</p>" +
-            "</div>" +
-            '<div class="card-body">' +
-            '<div class="input-group mb-1 ">' +
-            '<div class="offset-1 input-group-prepend" >' +
-            '<label class="input-group-text" style="background-color: #343A40; color: #FFFFFF; border:0;" for="inputGroupSelect01">' +
-            "Acoso" +
-            "</label>" +
-            "</div>" +
-            '<div class="col-md-1 col-lg-2 col-sm-1">' +
-            "<label>" +
-            '<input  type="radio" name="acoso" class="card-input-element" value="0.0" checked />' +
-            '<div class="panel panel-default card-input" >' +
-            '<div class="panel-heading btn btn-light" style = "border-radius: 10px" >' +
-            "Fuera de contexto" +
-            "</div>" +
-            "</div>" +
-            "</label>" +
-            "</div>" +
-            '<div class="col-md-1 col-lg-2 col-sm-1">' +
-            "<label>" +
-            '<input  type="radio" name="acoso" class="card-input-element" value="0.0" checked />' +
-            '<div class="panel panel-default card-input" >' +
-            '<div class="panel-heading btn btn-light" style = "border-radius: 10px" >' +
-            "Nada" +
-            "</div>" +
-            "</div>" +
-            "</label>" +
-            "</div>" +
-            '<div class="col-md-1 col-lg-2 col-sm-1 ">' +
-            "<label>" +
-            '<input  type = "radio" name = "acoso" class = "card-input-element" value = "0.35" / >' +
-            '<div class="panel panel-default card-input">' +
-            '<div class="panel-heading btn btn-light" style="border-radius: 10px">' +
-            "Poco" +
-            "</div>" +
-            "</div>" +
-            "</label>" +
-            "</div>" +
-            '<div class="col-md-1 col-lg-2 col-sm-1 ">' +
-            "<label>" +
-            '<input  type = "radio" name = "acoso" class = "card-input-element" value = "0.65" / >' +
-            '<div class="panel panel-default card-input">' +
-            '<div class="panel-heading btn btn-light" style="border-radius: 10px ">' +
-            "Mucho" +
-            "</div>" +
-            "</div>" +
-            "</label>" +
-            "</div>" +
-            '<div class="col-md-1 col-lg-2 col-sm-1 ">' +
-            "<label>" +
-            '<input  type = "radio" name = "acoso" class = "card-input-element" value = "1" / >' +
-            '<div class="panel panel-default card-input">' +
-            '<div class="panel-heading btn btn-light" style="border-radius: 10px">' +
-            "Bastante" +
-            "</div>" +
-            "</div>" +
-            "</label>" +
-            "</div>" +
-            "</div>" +
-            '<div class = "input-group mb-1" >' +
-            '<div class="offset-1 input-group-prepend">' +
-            '<label class = "input-group-text" style="background-color: #343A40; color: #FFFFFF; border:0;" for = "inputGroupSelect01" >' +
-            "Violencia" +
-            "</label>" +
-            "</div>" +
-            '<div class="col-md-1 col-lg-2 col-sm-1 ">' +
-            "<label>" +
-            '<input type = "radio" name = "violencia" class = "card-input-element" value = "0.0" checked />' +
-            '<div class="panel panel-default card-input">' +
-            '<div class="panel-heading btn btn-light" style="border-radius: 10px">' +
-            "Nada" +
-            "</div>" +
-            "</div>" +
-            "</label>" +
-            "</div>" +
-            '<div class="col-md-1 col-lg-2 col-sm-1 ">' +
-            "<label>" +
-            '<input type = "radio" name = "violencia" class = "card-input-element" value = "0.35" / >' +
-            '<div class="panel panel-default card-input">' +
-            '<div class="panel-heading btn btn-light" style="border-radius: 10px">' +
-            "Poco" +
-            "</div>" +
-            "</div>" +
-            "</label>" +
-            "</div>" +
-            '<div class="col-md-1 col-lg-2 col-sm-1 ">' +
-            "<label>" +
-            '<input type = "radio" name = "violencia" class = "card-input-element" value = "0.65" / >' +
-            '<div class="panel panel-default card-input">' +
-            '<div class="panel-heading btn btn-light" style="border-radius: 10px">' +
-            "Mucho" +
-            "</div>" +
-            "</div>" +
-            "</label>" +
-            "</div>" +
-            '<div class="col-md-1 col-lg-2 col-sm-1 ">' +
-            "<label>" +
-            '<input type = "radio" name = "violencia" class = "card-input-element" value = "1" / >' +
-            '<div class="panel panel-default card-input">' +
-            '<div class="panel-heading btn btn-light" style="border-radius: 10px">' +
-            "Bastante" +
-            "</div>" +
-            "</div>" +
-            "</label>" +
-            "</div>" +
-            "</div>" +
-            "</div>" +
-            "</div>" +
-            "</div>" +
-            "</div>";
+            '</p>\
+                        <div class="content_tags">\
+                            <!-- Area de etiquetado para acoso-->\
+                            <div class="content_inputs">\
+                                <p class="acoso text-center">Acoso</p>\
+                                <div class="tags text-center">\
+                                    <div class="level">\
+                                        <input class="inputTags" type="radio" name="acoso" id="acoso" value="-1" checked>\
+                                        <label class="info" for="inputTags">Fuera de contexto</label>\
+                                    </div>\
+                                    <div class="level">\
+                                        <input class="inputTags" type="radio" name="acoso" id="acoso" value="0.0">\
+                                        <label class="info" for="inputTags">Nada</label>\
+                                    </div>\
+                                    <div class="level">\
+                                        <input class="inputTags" type="radio" name="acoso" id="acoso" value="0.25">\
+                                        <label class="info" for="inputTags">Poco</label>\
+                                    </div>\
+                                    <div class="level">\
+                                        <input class="inputTags" type="radio" name="acoso" id="acoso" value="0.50">\
+                                        <label class="info" for="inputTags">Mucho</label>\
+                                    </div>\
+                                    <div class="level">\
+                                        <input class="inputTags" type="radio" name="acoso" id="acoso" value="1.0">\
+                                        <label class="info" for="inputTags">Demasiado</label>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                            <div class="content_inputs violencia">\
+                                <!-- Area de etiquetado para violencia-->\
+                                <p class="acoso text-center">Violencia</p>\
+                                <div class="tags text-center">\
+                                    <div class="level">\
+                                        <input class="inputTags" type="radio" name="violencia" id="acoso" value="-1" checked>\
+                                        <label class="info" for="inputTags">Fuera de contexto</label>\
+                                    </div>\
+                                    <div class="level">\
+                                        <input class="inputTags" type="radio" name="violencia" id="acoso" value="0.0">\
+                                        <label class="info" class="info" for="inputTags">Nada</label>\
+                                    </div>\
+                                    <div class="level">\
+                                        <input class="inputTags" type="radio" name="violencia" id="acoso" value="0.25">\
+                                        <label class="info" for="inputTags">Poco</label>\
+                                    </div>\
+                                    <div class="level">\
+                                        <input class="inputTags" type="radio" name="violencia" id="acoso" value="0.50">\
+                                        <label class="info" for="inputTags">Mucho</label>\
+                                    </div>\
+                                    <div class="level">\
+                                        <input class="inputTags" type="radio" name="violencia" id="acoso" value="1.0">\
+                                        <label class="info" for="inputTags">Demasiado</label>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div>\
+                    </div>\
+                </div>\
+            </div>\
+        </div>\
+        </div>';
     });
-    templateHTML +=
-        '<div class="container">' +
-        '<div class="row">' +
-        '<div class="col text-center">';
+    templateHTML += '<div class="buttonsPag text-center">';
     templateHTML +=
         pageNumber > 1 ?
-        " <button class='btn btn-primary' onclick='previusPage()'>Anterior</button>" :
+        '<button class="buttonsNP" type="button" onclick="previusPage()">\
+            &lt; Anterior\
+        </button>' :
         "";
     templateHTML +=
         pageNumber < data.length ?
-        " <button class='btn btn-primary' onclick='nextPage()'>Siguiente</button>" :
+        '<button class="buttonsNP" type="button" onclick="nextPage()">\
+            Siguiente &gt;\
+        </button>' :
         "";
-    templateHTML += "</div></div></div>";
+    templateHTML += "</div>";
     document.getElementById("container").innerHTML = "";
     document.getElementById("container").innerHTML = templateHTML;
 }

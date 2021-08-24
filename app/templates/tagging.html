@@ -2,26 +2,38 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet-admin.css') }}" />
     <link rel="shortcut icon" href="{{ url_for('static', filename='assets/logo.ico') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/tagging.css') }}" />
+    <!-- Poppins font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <!-- Lato -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <!-- Titulo -->
     <title>Etiquetado</title>
 </head>
 
 <body>
-    <nav class="navbar sticky-top navbar-expand-lg justify-content-end" style="background-color: #f8f8f852">
-        <a id="user" style="color: beige" class="navbar-brand">{{user}}</a>
-        <button style="color: beige; outline-style: groove" class="btn my-2 my-sm-0" type="submit" onclick="save()">
-            Salir
+    <!-- Navbar -->
+    <nav class="navbar sticky-top navbar-expand-lg justify-content-between" style="background-color: #FFFFFF1B;">
+        <a id="user" style="color: white;" class="navbar-brand user"> {{user}} </a>
+        <button class="buttonExit justify-content-end" onclick="save()">
+            <img class="exit" src="../static/assets/exit.jpg" /> Salir
         </button>
     </nav>
-    <div id="container" class="container"></div>
+    <!-- Contenido del etiquetado -->
+    <div id="container" class="container">
+        <!-- Tarjeta flotante -->
+    </div>
 
     <script src="{{ url_for('static', filename='js/jquery/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/controller/getContent.js') }}"></script>

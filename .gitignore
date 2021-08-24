@@ -11,3 +11,4 @@ app/db/__pycache__
 app/db/connection/__pycache__
 __pycache__
 app/code/__pycache__
+app/templates/test2.html

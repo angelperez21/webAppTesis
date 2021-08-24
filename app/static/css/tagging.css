@@ -10,6 +10,10 @@
     margin-bottom: 1%;
 }
 
+.level {
+    display: inline;
+}
+
 .buttonsPag {
     max-width: 100%;
     margin-top: 15px;
@@ -108,5 +112,131 @@ input[type='radio']:checked:after {
     background-color: #20d1a9;
     display: inline-block;
     visibility: visible;
-    border: 2px solid #20d1a9;
+    border: 2px solid #333333;
+}
+
+@media only screen and (min-width:320px) and (max-width:823px) {
+    .container {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    .tags {
+        background-color: #333333;
+        height: 170px;
+        border-radius: 5px;
+        width: 140px;
+    }
+    .content {
+        max-width: 90%;
+        margin: 0 auto;
+        margin-top: 1%;
+        margin-bottom: 1%;
+    }
+    .content_tags {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .violencia {
+        margin-left: 35px;
+    }
+    .level {
+        display: flex;
+    }
+    label {
+        font-size: 10px;
+        margin-top: 10px;
+    }
+    input {
+        width: 15px;
+        height: 15px;
+    }
+    input[type='radio']:after {
+        width: 15px;
+        height: 15px;
+        border-radius: 15px;
+        top: -2px;
+        left: -1px;
+        position: relative;
+        background-color: #333333;
+        content: '';
+        display: inline-block;
+        visibility: visible;
+        border: 2px solid #c2ccca;
+    }
+    input[type='radio']:checked:after {
+        width: 15px;
+        height: 15px;
+        border-radius: 15px;
+        top: -2px;
+        left: -1px;
+        position: relative;
+        background-color: #20d1a9;
+        display: inline-block;
+        visibility: visible;
+        border: 2px solid #333333;
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 880px) and (orientation: landscape) {
+    .container {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    .tags {
+        background-color: #333333;
+        height: 170px;
+        border-radius: 5px;
+        width: 140px;
+    }
+    .content {
+        max-width: 90%;
+        margin: 0 auto;
+        margin-top: 1%;
+        margin-bottom: 1%;
+    }
+    .content_tags {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .violencia {
+        margin-left: 35px;
+    }
+    .level {
+        display: flex;
+    }
+    label {
+        font-size: 10px;
+        margin-top: 10px;
+    }
+    input {
+        width: 15px;
+        height: 15px;
+    }
+    input[type='radio']:after {
+        width: 15px;
+        height: 15px;
+        border-radius: 15px;
+        top: -2px;
+        left: -1px;
+        position: relative;
+        background-color: #333333;
+        content: '';
+        display: inline-block;
+        visibility: visible;
+        border: 2px solid #c2ccca;
+    }
+    input[type='radio']:checked:after {
+        width: 15px;
+        height: 15px;
+        border-radius: 15px;
+        top: -2px;
+        left: -1px;
+        position: relative;
+        background-color: #20d1a9;
+        display: inline-block;
+        visibility: visible;
+        border: 2px solid #333333;
+    }
 }
