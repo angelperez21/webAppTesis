@@ -27,6 +27,7 @@ function getStop() {
 }
 
 function nextPage() {
+    var new_tag = [];
     endTagged = new Date();
     totalTagged = endTagged.getTime() - startTagged.getTime();
     seg = totalTagged / 1000;
@@ -37,22 +38,32 @@ function nextPage() {
     var tweet = document.getElementById("tweet").innerHTML;
     user = document.getElementById("user").innerHTML;
     var id = document.getElementById("idTweet").innerHTML;
-    tagList.push({
-        evaluator: user,
-        bullying: valuebu,
-        violence: valuevi,
-        timeTagged: seg,
-    });
+    if (tagList.length != 0) {
+        tagList.push({
+            evaluator: user,
+            bullying: valuebu,
+            violence: valuevi,
+            timeTaggedms: seg,
+        });
+        new_tag = tagList;
+    } else {
+        new_tag.push({
+            evaluator: user,
+            bullying: valuebu,
+            violence: valuevi,
+            timeTaggedms: seg,
+        });
+    }
     newObj = {
         _id: id,
         tweet: tweet,
-        evaluation: tagList,
+        evaluation: new_tag,
     };
     dataList.push(newObj);
     pageNumber++;
     if (count == pause) {
         console.table(dataList);
-        save();
+        save("continue");
     }
     showContent(pagination);
 }
@@ -64,7 +75,7 @@ function previusPage() {
 }
 
 function setData(dataDB) {
-    console.log(dataDB);
+    console.table(dataDB);
     if (dataDB != "Server error") {
         data = dataDB;
         showContent(dataDB);
@@ -79,28 +90,41 @@ function setData(dataDB) {
     }
 }
 
-function save() {
+function save(status) {
     endLogin = new Date();
     total = endLogin.getTime() - startLogin.getTime();
     seg = total / 1000;
     console.log("Tiempo en segundos loggeado: " + seg);
     user = document.getElementById("user").innerHTML;
     console.table(dataList);
-    $.ajax({
-        url: "/saveTags",
-        type: "POST",
-        data: JSON.stringify(dataList),
-        contentType: "application/json",
-        success: function() {
-            window.location = "/";
-        },
-        error: function() {},
-    });
+    if (status == "end") {
+        $.ajax({
+            url: "/saveTags",
+            type: "POST",
+            data: JSON.stringify(dataList),
+            contentType: "application/json",
+            success: function() {
+                window.location = "/";
+            },
+            error: function() {},
+        });
+    } else {
+        $.ajax({
+            url: "/saveTags",
+            type: "POST",
+            data: JSON.stringify(dataList),
+            contentType: "application/json",
+            success: function() {
+                window.location = "/wait";
+            },
+            error: function() {},
+        });
+    }
 }
 
 function getStarted() {
     startLogin = new Date();
-    pause = getStop();
+    pause = 5;
     $.ajax({
         url: "/getTweets",
         type: "POST",
@@ -125,9 +149,9 @@ function showContent(_data) {
     pagination.forEach((item) => {
         console.log("Length " + item["evaluation"].length);
         console.log("Type " + typeof item["evaluation"]);
-        item["evaluation"] > 0 ?
+        item["evaluation"].length > 0 ?
             tagList.push(item["evaluation"]) :
-            console.log(item["evaluation"]);
+            console.log("No tagged");
         templateHTML +=
             '<div class="card-deck pt-2 mt-2 mr-2">\
             <div class="card text-white">\
@@ -210,7 +234,7 @@ function showContent(_data) {
         </button>' :
         "";
     templateHTML +=
-        pageNumber < data.length ?
+        pageNumber - 1 < data.length ?
         '<button class="buttonsNP" type="button" onclick="nextPage()">\
             Siguiente &gt;\
         </button>' :

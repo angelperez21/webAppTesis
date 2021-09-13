@@ -8,7 +8,7 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet-admin.css') }}" />
-    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/logo.ico') }}" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/logo.ico') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/tagging.css') }}" />
     <!-- Poppins font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,8 +26,8 @@
     <!-- Navbar -->
     <nav class="navbar sticky-top navbar-expand-lg justify-content-between" style="background-color: #FFFFFF1B;">
         <a id="user" style="color: white;" class="navbar-brand user"> {{user}} </a>
-        <button class="buttonExit justify-content-end" onclick="save()">
-            <img class="exit" src="../static/assets/exit.jpg" /> Salir
+        <button class="buttonExit justify-content-end" onclick="save('end')">
+            <img class="exit" src="../static/images/exit.jpg" /> Salir
         </button>
     </nav>
     <!-- Contenido del etiquetado -->

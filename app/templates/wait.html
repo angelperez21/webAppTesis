@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title> Descansemos un poco </title>
+    <meta name="description" content="Kite Coming Soon HTML Template by Jewel Theme">
+    <meta name="author" content="Jewel Theme">
+
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+
+    <!-- Bootstrap  -->
+    <link href="{{url_for('static', filename='css/bootstrap/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- icon fonts font Awesome -->
+    <link href="{{url_for('static', filename='css/font-awesome.min.css')}}" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link href="{{url_for('static', filename='css/style.css')}}" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="loader">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="lading"></div>
+        </div>
+    </div>
+    <!-- /#preloader -->
+    <!-- Preloader End-->
+
+
+
+
+    <!-- Page Top Section -->
+    <section id="page-top" class="section-style" data-background-image="{{url_for('static', filename='images/page-top.jpg')}}">
+        <div class="pattern height-resize">
+            <div class="container">
+                <h1 class="site-title">
+                    Excelente, vamos por buen camino
+                </h1>
+                <!-- /.site-title -->
+                <h3 style="font-size: 1rem;" class="section-name">
+                    <span>
+						Respira, tomate un descanso
+					</span>
+                </h3>
+                <!-- /.section-name -->
+                <h2 class="section-title">
+                    Cuando estes listx, presiona el boton continuar
+                </h2>
+                <!-- /.Section-title  -->
+                <div id="time_countdown" class="time-count-container text-center">
+                    <div class="col-md-4">
+                        <div class="time-box">
+                            <div class="time-box-inner dash seconds_dash animated" data-animation="rollIn" data-animation-delay="1200">
+                                <span class="time-number">
+									<span class="digit">0</span>
+                                <span class="digit">0</span>
+                                </span>
+                                <span class="time-name">Seconds</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="continues" onclick="getStarted()">
+                        <button>Continuar</button>
+                    </div>
+                </div>
+                <!-- /.time-count-container -->
+
+                <!-- jQuery Library -->
+                <script type="text/javascript" src="{{url_for('static', filename='js/jquery-2.1.0.min.js')}}"></script>
+                <!-- Modernizr js -->
+                <script type="text/javascript" src="{{url_for('static', filename='js/modernizr-2.8.0.min.js')}}"></script>
+                <!-- Plugins -->
+                <script type="text/javascript" src="{{url_for('static', filename='js/plugins.js')}}"></script>
+                <!-- Custom JavaScript Functions -->
+                <script type="text/javascript" src="{{url_for('static', filename='js/functions.js')}}"></script>
+                <!-- Custom JavaScript Functions -->
+                <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.ajaxchimp.min.js') }} "></script>
+
+</body>
+
+</html>

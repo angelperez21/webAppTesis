@@ -216,6 +216,11 @@ def saveTags():
         )
 
 
+@app.route('/wait')
+def wait():
+    return render_template('wait.html')
+
+
 # Función para envio de correos a usuarios
 # Parametros:
 #   - recipients: Destinatario
