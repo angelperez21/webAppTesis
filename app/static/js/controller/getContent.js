@@ -9,7 +9,8 @@ var tagList = [];
 var dataList = [];
 var count = 0;
 var pause = 0;
-var startLogin, endLogin, startTagged, endTagged;
+var startLogin, endLogin, startTagged, endTagged, init_logging;
+var indexes = [];
 
 function paginate(array, elements_page, page_number) {
     return array.slice(
@@ -26,12 +27,11 @@ function getStop() {
     return Math.floor(Math.random() * (max - min + 1) + 40);
 }
 
-function nextPage() {
+function nextPage(index) {
     var new_tag = [];
     endTagged = new Date();
     totalTagged = endTagged.getTime() - startTagged.getTime();
     seg = totalTagged / 1000;
-    console.log("Tiempo ocupado para etiquetar -> " + seg);
     count += 1;
     var valuebu = $('input[name="acoso"]:checked').val();
     var valuevi = $('input[name="violencia"]:checked').val();
@@ -40,10 +40,11 @@ function nextPage() {
     var id = document.getElementById("idTweet").innerHTML;
     if (tagList.length != 0) {
         tagList.push({
-            evaluator: user,
+            evaluator: user.trim(),
             bullying: valuebu,
             violence: valuevi,
             timeTaggedms: seg,
+            timeSession: 0,
         });
         new_tag = tagList;
     } else {
@@ -52,17 +53,19 @@ function nextPage() {
             bullying: valuebu,
             violence: valuevi,
             timeTaggedms: seg,
+            timeSession: 0,
         });
     }
     newObj = {
         _id: id,
         tweet: tweet,
+        index: index,
         evaluation: new_tag,
     };
     dataList.push(newObj);
     pageNumber++;
+    console.table(dataList);
     if (count == pause) {
-        console.table(dataList);
         save("continue");
     }
     showContent(pagination);
@@ -75,9 +78,9 @@ function previusPage() {
 }
 
 function setData(dataDB) {
-    console.table(dataDB);
     if (dataDB != "Server error") {
         data = dataDB;
+        console.table(data);
         showContent(dataDB);
     } else {
         data.push({
@@ -85,23 +88,20 @@ function setData(dataDB) {
             evaluation: [],
             tweet: "No tweet",
         });
-        console.table(data);
         showContent(dataDB);
     }
 }
 
 function save(status) {
-    endLogin = new Date();
-    total = endLogin.getTime() - startLogin.getTime();
-    seg = total / 1000;
-    console.log("Tiempo en segundos loggeado: " + seg);
-    user = document.getElementById("user").innerHTML;
-    console.table(dataList);
     if (status == "end") {
+        endLogin = new Date();
+        total = endLogin.getTime() - init_logging;
+        seg = total / 1000;
+        console.log(seg);
         $.ajax({
             url: "/saveTags",
             type: "POST",
-            data: JSON.stringify(dataList),
+            data: JSON.stringify({ data: JSON.stringify(dataList), timelogged: seg }),
             contentType: "application/json",
             success: function() {
                 window.location = "/";
@@ -109,13 +109,14 @@ function save(status) {
             error: function() {},
         });
     } else {
+        user = user.trim();
         $.ajax({
             url: "/saveTags",
             type: "POST",
             data: JSON.stringify(dataList),
             contentType: "application/json",
             success: function() {
-                window.location = "/wait";
+                window.location = "/wait?user=" + user;
             },
             error: function() {},
         });
@@ -124,6 +125,7 @@ function save(status) {
 
 function getStarted() {
     startLogin = new Date();
+    init_logging = startLogin.getTime();
     pause = 5;
     $.ajax({
         url: "/getTweets",
@@ -146,9 +148,9 @@ function showContent(_data) {
     startTagged = new Date();
     pagination = paginate(data, elementsXPage, pageNumber);
     templateHTML = "";
+    index = 0;
     pagination.forEach((item) => {
-        console.log("Length " + item["evaluation"].length);
-        console.log("Type " + typeof item["evaluation"]);
+        index = item["index"];
         item["evaluation"].length > 0 ?
             tagList.push(item["evaluation"]) :
             console.log("No tagged");
@@ -229,13 +231,17 @@ function showContent(_data) {
     templateHTML += '<div class="buttonsPag text-center">';
     templateHTML +=
         pageNumber > 1 ?
-        '<button class="buttonsNP" type="button" onclick="previusPage()">\
+        '<button class="buttonsNP" type="button" onclick="previusPage(' +
+        index +
+        ')">\
             &lt; Anterior\
         </button>' :
         "";
     templateHTML +=
         pageNumber - 1 < data.length ?
-        '<button class="buttonsNP" type="button" onclick="nextPage()">\
+        '<button class="buttonsNP" type="button" onclick="nextPage(' +
+        index +
+        ')">\
             Siguiente &gt;\
         </button>' :
         "";

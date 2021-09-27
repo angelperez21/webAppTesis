@@ -27,18 +27,18 @@
     font-family: 'Poppins', sans-serif;
     margin-left: 10px;
     background-color: transparent;
-    color: #20d1a9;
+    color: #eef2f1;
 }
 
 .buttonsNP:hover {
-    background-color: #20d1a9;
+    background-color: #eef2f1;
     color: #111111;
     border-color: transparent;
 }
 
 .buttonsNP:visited {
     border-color: transparent;
-    background-color: #20d1a9;
+    background-color: #eef2f1;
     color: #111111;
 }
 
@@ -48,7 +48,7 @@
 }
 
 .tags {
-    background-color: #333333;
+    background-color: #ffffff35;
     height: 35px;
     border-radius: 5px;
 }
@@ -69,7 +69,7 @@
 }
 
 .card {
-    background-color: #191919;
+    background-color: #ffffff46;
     font-family: 'Poppins', sans-serif;
     border-radius: 15px;
 }
@@ -95,7 +95,7 @@ input[type='radio']:after {
     top: -2px;
     left: -1px;
     position: relative;
-    background-color: #333333;
+    background-color: #f8f7f7;
     content: '';
     display: inline-block;
     visibility: visible;
@@ -109,10 +109,10 @@ input[type='radio']:checked:after {
     top: -2px;
     left: -1px;
     position: relative;
-    background-color: #20d1a9;
+    background-color: #e1b1f8;
     display: inline-block;
     visibility: visible;
-    border: 2px solid #333333;
+    border: 2px solid #ffffff;
 }
 
 @media only screen and (min-width:320px) and (max-width:823px) {
@@ -121,7 +121,7 @@ input[type='radio']:checked:after {
         margin: 0 auto;
     }
     .tags {
-        background-color: #333333;
+        background-color: #ffffff35;
         height: 170px;
         border-radius: 5px;
         width: 140px;
@@ -158,7 +158,7 @@ input[type='radio']:checked:after {
         top: -2px;
         left: -1px;
         position: relative;
-        background-color: #333333;
+        background-color: #f8f7f7;
         content: '';
         display: inline-block;
         visibility: visible;
@@ -171,10 +171,10 @@ input[type='radio']:checked:after {
         top: -2px;
         left: -1px;
         position: relative;
-        background-color: #20d1a9;
+        background-color: #e1b1f8;
         display: inline-block;
         visibility: visible;
-        border: 2px solid #333333;
+        border: 2px solid #ffffff;
     }
 }
 
@@ -184,7 +184,7 @@ input[type='radio']:checked:after {
         margin: 0 auto;
     }
     .tags {
-        background-color: #333333;
+        background-color: #ffffff35;
         height: 170px;
         border-radius: 5px;
         width: 140px;
@@ -221,7 +221,7 @@ input[type='radio']:checked:after {
         top: -2px;
         left: -1px;
         position: relative;
-        background-color: #333333;
+        background-color: #f8f7f7;
         content: '';
         display: inline-block;
         visibility: visible;
@@ -234,9 +234,9 @@ input[type='radio']:checked:after {
         top: -2px;
         left: -1px;
         position: relative;
-        background-color: #20d1a9;
+        background-color: #e1b1f8;
         display: inline-block;
         visibility: visible;
-        border: 2px solid #333333;
+        border: 2px solid #ffffff;
     }
 }

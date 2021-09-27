@@ -50,17 +50,18 @@
         <div class="pattern height-resize">
             <div class="container">
                 <h1 class="site-title">
-                    Excelente, vamos por buen camino
+                    Excelente
+                    <p id="user"> {{user}}</p> <br> Vamos por buen camino
                 </h1>
                 <!-- /.site-title -->
                 <h3 style="font-size: 1rem;" class="section-name">
                     <span>
-						Respira, tomate un descanso
-					</span>
+                        Respira, tomate un descanso
+                    </span>
                 </h3>
                 <!-- /.section-name -->
                 <h2 class="section-title">
-                    Cuando estes listx, presiona el boton continuar
+                    presiona el botón continuar cuando lo desees.
                 </h2>
                 <!-- /.Section-title  -->
                 <div id="time_countdown" class="time-count-container text-center">
@@ -68,14 +69,14 @@
                         <div class="time-box">
                             <div class="time-box-inner dash seconds_dash animated" data-animation="rollIn" data-animation-delay="1200">
                                 <span class="time-number">
-									<span class="digit">0</span>
+                                    <span class="digit">0</span>
                                 <span class="digit">0</span>
                                 </span>
                                 <span class="time-name">Seconds</span>
                             </div>
                         </div>
                     </div>
-                    <div class="continues" onclick="getStarted()">
+                    <div class="continues" onclick="getBack()">
                         <button>Continuar</button>
                     </div>
                 </div>
@@ -91,6 +92,8 @@
                 <script type="text/javascript" src="{{url_for('static', filename='js/functions.js')}}"></script>
                 <!-- Custom JavaScript Functions -->
                 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.ajaxchimp.min.js') }} "></script>
+                <script src="{{ url_for('static', filename='js/controller/getBack.js') }}"></script>
+
 
 </body>
 

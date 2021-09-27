@@ -31,6 +31,9 @@ app.config["MAIL_USE_SSL"] = False
 """ Instancia para envio de correos electronicos."""
 mail = Mail(app)
 
+"""Variables globales"""
+temp_data = []
+
 
 @app.route("/test")
 def test():
@@ -77,7 +80,11 @@ def getTweets():
                     for evaluator in item["evaluation"]:
                         if evaluator["user"] != nameEvaluator:
                             finalTweets.append(item)
-            responseTweets = [finalTweets[index] for index in indexes]
+            # responseTweets = [finalTweets[index] for index in indexes]
+            responseTweets = []
+            for index in indexes:
+                finalTweets[index]['index'] = index
+                responseTweets.append(finalTweets[index])
             return Response(
                 json_util.dumps(responseTweets),
                 status=202,
@@ -207,18 +214,42 @@ def saveTags():
             # update DB
             # return template with user
             print(data)
+            if type(data) is dict:
+                tweets = json.loads(data.get('data'))
+                for item in tweets:
+                    temp_data.append(item)
+                for item in temp_data:
+                    for evaluation in item.get('evaluation'):
+                        evaluation['evaluator'] = evaluation['evaluator'].strip()
+                        evaluation['timeSession'] = data.get('timelogged')
+                print(data.get('timelogged'))
+                print(temp_data)
+            else:
+                for item in data:
+                    temp_data.append(item)
+                print(len(temp_data))
             return Response(
                 status=202,
             )
-    except Exception:
+    except Exception as exception:
+        print(exception)
         return Response(
             status=404,
         )
 
 
-@app.route('/wait')
+@app.route('/wait', methods=['POST', 'GET'])
 def wait():
-    return render_template('wait.html')
+    if request.method == 'POST' or request.method == 'GET':
+        data = request.args.get('user')
+    return render_template('wait.html', user=data)
+
+
+@app.route('/return_tagging', methods=['GET'])
+def return_taggin():
+    if request.method == 'GET':
+        data = data = request.args.get('user')
+        return render_template("tagging.html", user=data)
 
 
 # Función para envio de correos a usuarios
