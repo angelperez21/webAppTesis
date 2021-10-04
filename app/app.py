@@ -213,7 +213,6 @@ def saveTags():
             data = json.loads(request.data)
             # update DB
             # return template with user
-            print(data)
             if type(data) is dict:
                 tweets = json.loads(data.get('data'))
                 for item in tweets:
