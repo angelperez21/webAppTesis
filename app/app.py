@@ -92,8 +92,8 @@ def get_tweets():
             name_evaluator = request.json['user']
             stop = request.json['stop']
             list_tweets = json_util.loads(json_util.dumps(tweets_manager.getTweets()))
-            final_tweets = [tweet for tweet in list_tweets if tweet['evaluation']]
-            tagged_tweets = [tweet for tweet in list_tweets if not tweet['evaluation']]
+            final_tweets = [tweet for tweet in list_tweets if len(tweet['evaluation']) == 0]
+            tagged_tweets = [tweet for tweet in list_tweets if len(tweet['evaluation']) != 0]
             indexes = random.sample(range(len(list_tweets)), stop)
             if tagged_tweets:
                 for tweet in tagged_tweets:
@@ -101,6 +101,7 @@ def get_tweets():
                         if evaluator['user'] != name_evaluator:
                             final_tweets.append(tweet)
             response_tweets = []
+            print(len(list_tweets))
             for index in indexes:
                 final_tweets[index]['index'] = index
                 response_tweets.append(final_tweets[index])
@@ -133,7 +134,7 @@ def validation():
             passwd_page = request.form['passwd']
             email_db = json_util.loads(
                 json_util.dumps(
-                    user_manager.find_user(user_page),AAn
+                    user_manager.find_user(user_page),
                 ),
             )
         if email_db:
