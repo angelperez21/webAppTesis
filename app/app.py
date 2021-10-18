@@ -133,7 +133,7 @@ def validation():
             passwd_page = request.form['passwd']
             email_db = json_util.loads(
                 json_util.dumps(
-                    user_manager.find_user(user_page),
+                    user_manager.find_user(user_page),AAn
                 ),
             )
         if email_db:
@@ -160,11 +160,12 @@ def insert_user():
     if request.method == 'POST':
         user = request.form['user']
         email = request.form['email']
+        gender = request.form['gender']
         passwd = request.form['passwd']
         passwd1 = request.form['passwd1']
         if passwd == passwd1:
             # Almacenamos al usuario en nuestra DB
-            response_db = user_manager.insert_user(user, email, passwd)
+            response_db = user_manager.insert_user(user, email, passwd, gender)
             if response_db:
                 send_mail(
                     email,

@@ -39,3 +39,11 @@ body {
 .form-control::placeholder {
     color: white;
 }
+
+select{
+    background: rgba(0, 0, 0, .3);
+    color: white;
+    height: 38px;
+    width: 289px;
+    border-radius: 3px;
+}
