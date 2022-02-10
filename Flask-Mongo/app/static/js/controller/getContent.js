@@ -78,6 +78,7 @@ function previusPage() {
 }
 
 function setData(dataDB) {
+    console.table(dataDB);
     if (dataDB != "Server error") {
         data = dataDB;
         console.table(data);

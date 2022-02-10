@@ -1,14 +1,1 @@
-.webApp
-.vscode
-app/__pycache__
-app/connection/__pycache__
-test.py
-app/email/__pycache__
-app/test.json
-app/mail/__pycache__/mail.cpython-39.pyc
-app/templates/test.html
-app/db/__pycache__
-app/db/connection/__pycache__
-__pycache__
-app/code/__pycache__
-app/templates/test2.html
+.*
