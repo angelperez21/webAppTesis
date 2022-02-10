@@ -1,0 +1,6 @@
+requests
+pynamodb
+python-ulid
+requests-toolbelt
+clint
+wemake-python-styleguide
