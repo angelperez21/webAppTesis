@@ -11,7 +11,10 @@ Globals:
     Runtime: python3.8
     Environment:
       Variables:
-        TABLE_NAME: !Ref myTable
+        REGION_AWS: !Sub $(AWS::Region)
+        AWS_DYNAMODB_TABLE: !Ref myTable
+        CLIENT_ID: !Ref UserPoolTesis
+        
 
 Resources:
 
