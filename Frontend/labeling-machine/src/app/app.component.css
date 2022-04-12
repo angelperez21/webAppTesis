@@ -1,0 +1,10 @@
+.labeling-machine-spacer {
+    flex: 1 1 auto;
+}
+
+.labeling-machine-icon{
+    background-color: transparent;
+    border: 0px;
+    color: #fff;
+}
+
