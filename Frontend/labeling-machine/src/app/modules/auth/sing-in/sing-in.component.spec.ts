@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RestoreComponent } from './restore.component';
+import { SingInComponent } from './sing-in.component';
 
-describe('RestoreComponent', () => {
-  let component: RestoreComponent;
-  let fixture: ComponentFixture<RestoreComponent>;
+describe('SingInComponent', () => {
+  let component: SingInComponent;
+  let fixture: ComponentFixture<SingInComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RestoreComponent ]
+      declarations: [ SingInComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RestoreComponent);
+    fixture = TestBed.createComponent(SingInComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

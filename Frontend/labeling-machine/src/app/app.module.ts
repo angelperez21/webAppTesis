@@ -1,12 +1,12 @@
+// Modulos de angular
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//Modulos propios
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { SharedModule } from './shared/shared.module';
-import { SignInUpModule } from './sign-in-up/sign-in-up.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -14,10 +14,10 @@ import { SignInUpModule } from './sign-in-up/sign-in-up.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
     SharedModule,
-    SignInUpModule
+    AuthModule
   ],
   bootstrap: [AppComponent]
 })

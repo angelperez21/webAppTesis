@@ -3,7 +3,7 @@ from pymongo import MongoClient
 
 class Connection:
     # URL con la que hacemos la conexión con MongoDB
-    MONGO_URI = "mongodb://127.0.0.1"
+    MONGO_URI = "mongodb+srv://angelpa:-Angel082911@tweets.sibcw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
     # Cliente con el que nos conectaremos con MongoDB
     client = MongoClient(MONGO_URI)
     # Base de datos a utilizar
