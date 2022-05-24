@@ -1,0 +1,14 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.toolbar {
+  min-height: 30px !important;
+  height: 30px !important;
+}
+
+mat-toolbar,
+button {
+  background-color: rgba(233, 195, 236, 0.479);
+  border: transparent;
+}

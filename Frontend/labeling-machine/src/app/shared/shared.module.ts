@@ -1,5 +1,5 @@
 // Modulos de angular
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -20,9 +20,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatRadioModule } from '@angular/material/radio';
 // Componentes propios
+import { LabelingToolbarComponent } from './components/labeling-toolbar/labeling-toolbar.component';
 
 @NgModule({
   declarations: [
+    LabelingToolbarComponent
   ],
   imports: [
     CommonModule,
@@ -64,7 +66,8 @@ import { MatRadioModule } from '@angular/material/radio';
     MatAutocompleteModule,
     MatSliderModule,
     MatRadioModule,
-    RouterModule
+    RouterModule,
+    LabelingToolbarComponent
   ]
 })
 export class SharedModule { }
