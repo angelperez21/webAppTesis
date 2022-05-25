@@ -21,10 +21,12 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatRadioModule } from '@angular/material/radio';
 // Componentes propios
 import { LabelingToolbarComponent } from './components/labeling-toolbar/labeling-toolbar.component';
+import { CardAuthComponent } from './components/card-auth/card-auth.component';
 
 @NgModule({
   declarations: [
-    LabelingToolbarComponent
+    LabelingToolbarComponent,
+    CardAuthComponent
   ],
   imports: [
     CommonModule,
@@ -67,7 +69,8 @@ import { LabelingToolbarComponent } from './components/labeling-toolbar/labeling
     MatSliderModule,
     MatRadioModule,
     RouterModule,
-    LabelingToolbarComponent
+    LabelingToolbarComponent,
+    CardAuthComponent
   ]
 })
 export class SharedModule { }

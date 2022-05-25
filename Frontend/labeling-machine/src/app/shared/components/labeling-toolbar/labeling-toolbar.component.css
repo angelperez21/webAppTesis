@@ -3,12 +3,15 @@
 }
 
 .toolbar {
-  min-height: 30px !important;
-  height: 30px !important;
+  min-height: 40px !important;
+  height: 40px !important;
 }
 
-mat-toolbar,
+mat-toolbar {
+  background-color: rgba(233, 195, 236, 0.13);
+  margin-bottom: 2%;
+}
 button {
-  background-color: rgba(233, 195, 236, 0.479);
+  background-color: rgba(237, 228, 237, 0.651);
   border: transparent;
 }

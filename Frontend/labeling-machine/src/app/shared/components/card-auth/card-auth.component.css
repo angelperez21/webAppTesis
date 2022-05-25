@@ -1,0 +1,19 @@
+mat-card {
+  background-color: rgba(252, 245, 250, 0.87) !important;
+  border-radius: 30px;
+  padding: 15px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+mat-card-title {
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.card-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
